@@ -27,10 +27,48 @@
       padding: 10px 15px;
       font-weight: bold;
     }
+    .hero img {
+      width: 100%;
+      max-width: 720px;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .section h2 {
+      color: #5b3923;
+      margin-bottom: 20px;
+    }
+    iframe {
+      width: 100%;
+      max-width: 600px;
+      height: 300px;
+      border: 0;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
     footer {
       background-color: #5b3923;
       color: white;
       padding: 15px 10px;
+    }
+    #topBtn {
+      display: none;
+      position: fixed;
+      bottom: 30px;
+      right: 25px;
+      z-index: 99;
+      font-size: 20px;
+      background-color: #7b5237;
+      color: white;
+      border: none;
+      outline: none;
+      padding: 12px 16px;
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    #topBtn:hover {
+      background-color: #5b3923;
     }
   </style>
 </head>
@@ -40,15 +78,21 @@
   <img src="logo.png" alt="Logo La Taza Loca" style="height: 80px; width: auto;">
   <div>
     <h1 class="m-0">La Taza Loca ☕</h1>
-    <p class="m-0">Tu rincón favorito de Café & Lattes</p>
+    <p class="m-0">Tu rincón favorito de Café &amp; Lattes</p>
   </div>
 </header>
 
-<nav class="navbar">
+<nav class="navbar" style="background-color: #7b5237;">
   <div class="container d-flex justify-content-center gap-4 py-2 flex-wrap">
-    <a class="nav-link text-white fw-bold d-flex align-items-center gap-2" href="#menu"><i class="fas fa-mug-hot"></i> Menú</a>
-    <a class="nav-link text-white fw-bold d-flex align-items-center gap-2" href="#nosotros"><i class="fas fa-users"></i> Nosotros</a>
-    <a class="nav-link text-white fw-bold d-flex align-items-center gap-2" href="#contacto"><i class="fas fa-map-marker-alt"></i> Contacto</a>
+    <a class="nav-link text-white fw-bold d-flex align-items-center gap-2" href="#menu">
+      <i class="fas fa-mug-hot"></i> Menú
+    </a>
+    <a class="nav-link text-white fw-bold d-flex align-items-center gap-2" href="#nosotros">
+      <i class="fas fa-users"></i> Nosotros
+    </a>
+    <a class="nav-link text-white fw-bold d-flex align-items-center gap-2" href="#contacto">
+      <i class="fas fa-map-marker-alt"></i> Contacto
+    </a>
   </div>
 </nav>
 
