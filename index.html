@@ -1,156 +1,129 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>La Taza Loca</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <style>
-    body {
-      font-family: 'Roboto Condensed', sans-serif;
-      background-color: #f3e5d3;
-      color: #5b3923;
-    }
-    header {
-      background-color: #5b3923;
-      color: white;
-      padding: 20px;
-    }
-    nav {
-      background-color: #7b5237;
-    }
-    nav a.nav-link {
-      color: white !important;
-      padding: 10px 15px;
-      font-weight: bold;
-    }
-    .hero img {
-      width: 100%;
-      max-width: 720px;
-      height: auto;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-    .section h2 {
-      color: #5b3923;
-      margin-bottom: 20px;
-    }
-    iframe {
-      width: 100%;
-      max-width: 600px;
-      height: 300px;
-      border: 0;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-    }
-    footer {
-      background-color: #5b3923;
-      color: white;
-      padding: 15px 10px;
-    }
-    #topBtn {
-      display: none;
-      position: fixed;
-      bottom: 30px;
-      right: 25px;
-      z-index: 99;
-      font-size: 20px;
-      background-color: #7b5237;
-      color: white;
-      border: none;
-      outline: none;
-      padding: 12px 16px;
-      border-radius: 50%;
-      cursor: pointer;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    }
-    #topBtn:hover {
-      background-color: #5b3923;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Venta de Café</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #3e2723;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+        }
+
+        nav {
+            background-color: #5d4037;
+            padding: 10px;
+            text-align: center;
+        }
+
+        nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            font-size: 18px;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        section {
+            padding: 20px;
+        }
+
+        footer {
+            background-color: #3e2723;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        .contact-icons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .contact-icons img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .map {
+            margin-top: 20px;
+            width: 100%;
+            height: 300px;
+        }
+
+    </style>
 </head>
 <body>
 
-<header class="d-flex align-items-center justify-content-center gap-3 flex-wrap">
-  <img src="logo_con_hoja_y_qr_correcto.png" alt="Logo La Taza Loca" style="height: 80px; width: auto;">
-  <div>
-    <h1 class="m-0">La Taza Loca ☕</h1>
-    <p class="m-0">Tu rincón favorito de Café &amp; Lattes</p>
-  </div>
+<header>
+    <h1>Venta de Café</h1>
+    <p>Disfruta de los mejores granos de café recién tostados.</p>
 </header>
 
-<nav class="navbar" style="background-color: #7b5237;">
-  <div class="container d-flex justify-content-center gap-4 py-2 flex-wrap">
-    <a class="nav-link text-white fw-bold d-flex align-items-center gap-2" href="#menu">
-      <i class="fas fa-mug-hot"></i> Menú
-    </a>
-    <a class="nav-link text-white fw-bold d-flex align-items-center gap-2" href="#nosotros">
-      <i class="fas fa-users"></i> Nosotros
-    </a>
-    <a class="nav-link text-white fw-bold d-flex align-items-center gap-2" href="#contacto">
-      <i class="fas fa-map-marker-alt"></i> Contacto
-    </a>
-  </div>
+<nav>
+    <a href="#inicio">Inicio</a>
+    <a href="#productos">Productos</a>
+    <a href="#nosotros">Nosotros</a>
+    <a href="#contacto">Contacto</a>
 </nav>
 
-<section class="hero py-5 bg-light" id="menu">
-  <div class="container">
-    <h2 class="mb-4 display-5 text-uppercase">Nuestro Menú</h2>
-    <p class="lead mb-4">Explora nuestras especialidades artesanales preparadas con pasión y sabor auténtico.</p>
-    <img src="menu-taza-loca.png" alt="Menú La Taza Loca" class="img-fluid shadow rounded-4 border border-2 border-dark-subtle">
-  </div>
+<section id="inicio">
+    <h2>Bienvenido a nuestra tienda de café</h2>
+    <p>Ofrecemos los mejores cafés orgánicos y de comercio justo. Disfruta de una taza perfecta en cualquier momento.</p>
 </section>
 
-<section class="section py-5 bg-white" id="nosotros">
-  <div class="container">
-    <h2 class="display-5 text-uppercase">Sobre Nosotros</h2>
-    <p class="lead">En <strong>La Taza Loca</strong>, nos apasiona el buen café. Desde los granos seleccionados hasta la última gota, cada bebida es una experiencia cálida, auténtica y llena de sabor.</p>
-    <div class="row mt-4">
-      <div class="col-md-6 text-start">
-        <ul class="list-unstyled">
-          <li><i class="fas fa-check-circle text-success me-2"></i> Ingredientes naturales</li>
-          <li><i class="fas fa-check-circle text-success me-2"></i> Ambiente acogedor</li>
-          <li><i class="fas fa-check-circle text-success me-2"></i> Servicio amigable</li>
-        </ul>
-      </div>
-      <div class="col-md-6">
-        <img src="img/cafe-sobre-nosotros.jpg" alt="Café Artesanal" class="img-fluid rounded shadow">
-      </div>
+<section id="productos">
+    <h2>Productos</h2>
+    <ul>
+        <li>Café en grano 500g - $150</li>
+        <li>Café molido 500g - $140</li>
+        <li>Café en cápsulas - $180</li>
+    </ul>
+</section>
+
+<section id="nosotros">
+    <h2>Sobre nosotros</h2>
+    <p>Somos una pequeña tienda familiar que busca ofrecer café de calidad, cultivado de manera sostenible y respetuosa con el medio ambiente.</p>
+</section>
+
+<section id="contacto">
+    <h2>Contacto</h2>
+    <p>Si tienes alguna pregunta, no dudes en contactarnos a través de los siguientes medios:</p>
+    <div class="contact-icons">
+        <a href="tel:+123456789">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/WhatsApp_icon.png/512px-WhatsApp_icon.png" alt="WhatsApp">
+        </a>
+        <a href="tel:+987654321">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/WhatsApp_logo_2015.svg/1024px-WhatsApp_logo_2015.svg.png" alt="WhatsApp">
+        </a>
     </div>
-  </div>
-</section>
 
-<section class="section py-5 bg-light" id="contacto">
-  <div class="container">
-    <h2 class="display-5 text-uppercase">Contáctanos</h2>
-    <p class="lead">Visítanos o escríbenos por WhatsApp, ¡estamos para servirte!</p>
-    <div class="row">
-      <div class="col-md-6">
-        <iframe src="https://www.google.com/maps?q=Ruta+Mariano+Abasolo+7908,+Mariano+Matamoros,+22206+Tijuana,+B.C.,+México&output=embed"
-                width="100%" height="300" frameborder="0" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-      </div>
-      <div class="col-md-6 d-flex flex-column justify-content-center">
-        <p><i class="fab fa-whatsapp text-success"></i> <a href="https://wa.me/526644370267" class="text-dark fw-bold text-decoration-none">664 437 0267</a></p>
-        <p><i class="fab fa-whatsapp text-success"></i> <a href="https://wa.me/526645631675" class="text-dark fw-bold text-decoration-none">664-563-16-75</a></p>
-        <p><i class="fas fa-envelope text-primary"></i> <a href="mailto:riosyovani@gmail.com" class="text-dark text-decoration-none">riosyovani@gmail.com</a></p>
-      </div>
+    <div class="map">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3762.2068394319455!2d-99.16769878463357!3d19.42950025120128!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d1fb0c71e8c67b%3A0x52c1bbfd926cfe34!2sCafé%20el%20Lago!5e0!3m2!1ses-419!2smx!4v1686251820604!5m2!1ses-419!2smx" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
     </div>
-  </div>
 </section>
 
-<a href="https://wa.me/526644370267" class="btn btn-success rounded-circle"
-   style="position: fixed; bottom: 90px; right: 20px; z-index: 999; width: 56px; height: 56px; display: flex; align-items: center; justify-content: center;"
-   target="_blank" title="Chatea con nosotros por WhatsApp">
-   <i class="fab fa-whatsapp fa-lg"></i>
-</a>
-
-<footer class="text-center">
-  <p>© 2025 La Taza Loca. Todos los derechos reservados.</p>
+<footer>
+    <p>© 2025 Tienda de Café - Todos los derechos reservados</p>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
