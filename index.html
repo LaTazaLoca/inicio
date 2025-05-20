@@ -1,129 +1,464 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Venta de Café</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            color: #333;
-            margin: 0;
-            padding: 0;
-        }
-
-        header {
-            background-color: #3e2723;
-            color: white;
-            padding: 10px 20px;
-            text-align: center;
-        }
-
-        nav {
-            background-color: #5d4037;
-            padding: 10px;
-            text-align: center;
-        }
-
-        nav a {
-            color: white;
-            margin: 0 15px;
-            text-decoration: none;
-            font-size: 18px;
-        }
-
-        nav a:hover {
-            text-decoration: underline;
-        }
-
-        section {
-            padding: 20px;
-        }
-
-        footer {
-            background-color: #3e2723;
-            color: white;
-            text-align: center;
-            padding: 10px;
-            position: fixed;
-            width: 100%;
-            bottom: 0;
-        }
-
-        .contact-icons {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 10px;
-        }
-
-        .contact-icons img {
-            width: 40px;
-            height: 40px;
-        }
-
-        .map {
-            margin-top: 20px;
-            width: 100%;
-            height: 300px;
-        }
-
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>La Taza Loca | Café de Especialidad</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    :root {
+      --cafe-oscuro: #5b3923;
+      --cafe-medio: #7b5237;
+      --beige: #f3e5d3;
+      --sombra: 0 4px 12px rgba(91, 57, 35, 0.15);
+    }
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background-color: var(--beige);
+      color: var(--cafe-oscuro);
+      line-height: 1.6;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+    }
+    header {
+      background-color: var(--cafe-oscuro);
+      color: white;
+      padding: 1.5rem 0;
+    }
+    .logo-header {
+      height: 80px;
+      width: auto;
+      transition: transform 0.3s;
+    }
+    .logo-header:hover {
+      transform: rotate(-5deg);
+    }
+    nav {
+      background-color: var(--cafe-medio);
+      box-shadow: var(--sombra);
+    }
+    .nav-link {
+      color: white !important;
+      font-weight: 600;
+      padding: 0.75rem 1.25rem !important;
+    }
+    .nav-link:hover {
+      opacity: 0.9;
+    }
+    .hero-img {
+      border-radius: 12px;
+      box-shadow: var(--sombra);
+      transition: transform 0.3s;
+    }
+    .hero-img:hover {
+      transform: translateY(-5px);
+    }
+    .card {
+      border: none;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: var(--sombra);
+      transition: transform 0.3s;
+    }
+    .card:hover {
+      transform: translateY(-8px);
+    }
+    .card-img-top {
+      height: 200px;
+      object-fit: cover;
+    }
+    iframe {
+      border-radius: 12px;
+      box-shadow: var(--sombra);
+    }
+    footer {
+      background-color: var(--cafe-oscuro);
+      color: white;
+      padding: 2rem 0;
+    }
+    .btn-whatsapp {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 60px;
+      height: 60px;
+      z-index: 100;
+      box-shadow: 0 4px 20px rgba(37, 211, 102, 0.3);
+    }
+    .btn-facebook {
+      position: fixed;
+      bottom: 100px;
+      right: 30px;
+      width: 60px;
+      height: 60px;
+      z-index: 100;
+      box-shadow: 0 4px 20px rgba(66, 103, 178, 0.3);
+    }
+    .btn-top {
+      position: fixed;
+      bottom: 170px;
+      right: 30px;
+      width: 50px;
+      height: 50px;
+      z-index: 100;
+      background-color: var(--cafe-medio);
+    }
+    @media (max-width: 768px) {
+      .logo-header {
+        height: 60px;
+      }
+      .display-4 {
+        font-size: 2rem;
+      }
+    }
+  </style>
 </head>
 <body>
-
-<header>
-    <h1>Venta de Café</h1>
-    <p>Disfruta de los mejores granos de café recién tostados.</p>
-</header>
-
-<nav>
-    <a href="#inicio">Inicio</a>
-    <a href="#productos">Productos</a>
-    <a href="#nosotros">Nosotros</a>
-    <a href="#contacto">Contacto</a>
-</nav>
-
-<section id="inicio">
-    <h2>Bienvenido a nuestra tienda de café</h2>
-    <p>Ofrecemos los mejores cafés orgánicos y de comercio justo. Disfruta de una taza perfecta en cualquier momento.</p>
-</section>
-
-<section id="productos">
-    <h2>Productos</h2>
-    <ul>
-        <li>Café en grano 500g - $150</li>
-        <li>Café molido 500g - $140</li>
-        <li>Café en cápsulas - $180</li>
-    </ul>
-</section>
-
-<section id="nosotros">
-    <h2>Sobre nosotros</h2>
-    <p>Somos una pequeña tienda familiar que busca ofrecer café de calidad, cultivado de manera sostenible y respetuosa con el medio ambiente.</p>
-</section>
-
-<section id="contacto">
-    <h2>Contacto</h2>
-    <p>Si tienes alguna pregunta, no dudes en contactarnos a través de los siguientes medios:</p>
-    <div class="contact-icons">
-        <a href="tel:+123456789">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/WhatsApp_icon.png/512px-WhatsApp_icon.png" alt="WhatsApp">
-        </a>
-        <a href="tel:+987654321">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/WhatsApp_logo_2015.svg/1024px-WhatsApp_logo_2015.svg.png" alt="WhatsApp">
-        </a>
+  <!-- Header Mejorado -->
+  <header>
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-md-2 text-center text-md-start">
+          <img src="logo.png" alt="La Taza Loca" class="logo-header">
+        </div>
+        <div class="col-md-10 text-center text-md-start mt-3 mt-md-0">
+          <h1 class="display-4 mb-1">La Taza Loca <span class="text-warning">☕</span></h1>
+          <p class="lead mb-2">Café de especialidad con el mejor sabor de Tijuana</p>
+          <p class="small mb-0 d-none d-md-block">
+            <i class="fas fa-clock me-1"></i> <strong>Horario:</strong> L-V 8:00 AM - 12:00 PM | S-D 8:00 AM - 6:00 PM
+          </p>
+        </div>
+      </div>
     </div>
+  </header>
 
-    <div class="map">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3762.2068394319455!2d-99.16769878463357!3d19.42950025120128!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d1fb0c71e8c67b%3A0x52c1bbfd926cfe34!2sCafé%20el%20Lago!5e0!3m2!1ses-419!2smx!4v1686251820604!5m2!1ses-419!2smx" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+  <!-- Menú de Navegación Mejorado -->
+  <nav class="navbar navbar-expand-lg sticky-top">
+    <div class="container">
+      <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mx-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="#menu">
+              <i class="fas fa-mug-hot me-2"></i>Menú
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#nosotros">
+              <i class="fas fa-store me-2"></i>Nosotros
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#contacto">
+              <i class="fas fa-map-marker-alt me-2"></i>Ubicación
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#testimonios">
+              <i class="fas fa-comment me-2"></i>Testimonios
+            </a>
+          </li>
+        </ul>
+      </div>
     </div>
-</section>
+  </nav>
 
-<footer>
-    <p>© 2025 Tienda de Café - Todos los derechos reservados</p>
-</footer>
+  <!-- Sección Menú Mejorada -->
+  <section id="menu" class="py-5 bg-light">
+    <div class="container">
+      <div class="text-center mb-5">
+        <h2 class="display-5 mb-3">Nuestro Menú</h2>
+        <p class="lead">Selección premium de cafés y acompañamientos</p>
+      </div>
+      
+      <div class="row g-4">
+        <!-- Café 1 -->
+        <div class="col-md-4">
+          <div class="card h-100">
+            <img src="cafe-americano.jpg" class="card-img-top" alt="Café Americano">
+            <div class="card-body">
+              <h5 class="card-title">Americano</h5>
+              <p class="card-text">Café espresso con agua caliente para una experiencia suave.</p>
+              <p class="h5 text-success">$35 MXN</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Café 2 -->
+        <div class="col-md-4">
+          <div class="card h-100">
+            <img src="cafe-capuchino.jpg" class="card-img-top" alt="Capuchino">
+            <div class="card-body">
+              <h5 class="card-title">Capuchino</h5>
+              <p class="card-text">Espresso con leche vaporizada y una capa de espuma cremosa.</p>
+              <p class="h5 text-success">$45 MXN</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Café 3 -->
+        <div class="col-md-4">
+          <div class="card h-100">
+            <img src="cafe-moka.jpg" class="card-img-top" alt="Moka">
+            <div class="card-body">
+              <h5 class="card-title">Moka</h5>
+              <p class="card-text">Deliciosa combinación de chocolate, espresso y leche.</p>
+              <p class="h5 text-success">$50 MXN</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="text-center mt-5">
+        <a href="menu-taza-loca.jpg" class="btn btn-outline-primary" download>
+          <i class="fas fa-download me-2"></i>Descargar Menú Completo
+        </a>
+      </div>
+    </div>
+  </section>
 
+  <!-- Sección Nosotros Mejorada -->
+  <section id="nosotros" class="py-5">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-6 mb-4 mb-lg-0">
+          <img src="cafeteria-interior.jpg" alt="Nuestra cafetería" class="img-fluid rounded-3 hero-img">
+        </div>
+        <div class="col-lg-6">
+          <h2 class="display-5 mb-4">Nuestra Pasión por el Café</h2>
+          <p>En <strong>La Taza Loca</strong> seleccionamos personalmente los granos de café de las mejores regiones productoras. Cada taza es preparada con dedicación para ofrecerte una experiencia única.</p>
+          <ul class="list-unstyled">
+            <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Granos 100% arábica</li>
+            <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Tostado artesanal</li>
+            <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Preparación profesional</li>
+          </ul>
+          <div class="mt-4">
+            <a href="#contacto" class="btn btn-primary me-2">
+              <i class="fas fa-map-marker-alt me-1"></i> Visítanos
+            </a>
+            <a href="https://wa.me/526641273236" target="_blank" class="btn btn-success">
+              <i class="fab fa-whatsapp me-1"></i> Pedir ahora
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección Contacto Mejorada -->
+  <section id="contacto" class="py-5 bg-light">
+    <div class="container">
+      <div class="text-center mb-5">
+        <h2 class="display-5 mb-3">Ven a Visitarnos</h2>
+        <p>Estamos ubicados en el corazón de Tijuana</p>
+      </div>
+      
+      <div class="row g-4">
+        <div class="col-lg-6">
+          <div class="card h-100 border-0">
+            <div class="card-body">
+              <h4 class="card-title mb-4"><i class="fas fa-map-marker-alt text-danger me-2"></i> Dirección</h4>
+              <p class="card-text">Ruta Mariano Abasolo 7908, Mariano Matamoros, 22206 Tijuana, B.C., México</p>
+              
+              <h4 class="mt-4 mb-3"><i class="fas fa-phone-alt text-primary me-2"></i> Teléfonos</h4>
+              <p>
+                <a href="https://wa.me/526641273236" target="_blank" class="text-decoration-none me-3">
+                  <i class="fab fa-whatsapp text-success me-1"></i> 664-127-32-36
+                </a>
+                <a href="https://wa.me/526645631675" target="_blank" class="text-decoration-none">
+                  <i class="fab fa-whatsapp text-success me-1"></i> 664-563-16-75
+                </a>
+              </p>
+              
+              <h4 class="mt-4 mb-3"><i class="fas fa-clock text-warning me-2"></i> Horario</h4>
+              <p>
+                <strong>Lunes a Viernes:</strong> 8:00 AM - 12:00 PM<br>
+                <strong>Sábado y Domingo:</strong> 8:00 AM - 6:00 PM
+              </p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-lg-6">
+          <div class="h-100">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3365.897276107986!2d-116.9685829243381!3d32.48395087378749!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80d938f6f5d9f8a9%3A0x3c4a4a9a9a9a9a9a!2sRuta%20Mariano%20Abasolo%207908%2C%20Mariano%20Matamoros%2C%2022206%20Tijuana%2C%20B.C.%2C%20M%C3%A9xico!5e0!3m2!1ses!2sus!4v1712345678901!5m2!1ses!2sus" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección Testimonios Mejorada -->
+  <section id="testimonios" class="py-5">
+    <div class="container">
+      <div class="text-center mb-5">
+        <h2 class="display-5 mb-3">Lo que dicen nuestros clientes</h2>
+        <p>Experiencias reales de nuestros amantes del café</p>
+      </div>
+      
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="card h-100">
+            <div class="card-body text-center">
+              <div class="mb-3">
+                <i class="fas fa-quote-left fa-2x text-muted"></i>
+              </div>
+              <p class="card-text">"El mejor café de Tijuana, siempre fresco y con un sabor increíble. ¡Mi lugar favorito para empezar el día!"</p>
+              <div class="mt-4">
+                <h5 class="mb-1">Ana Martínez</h5>
+                <div class="text-warning">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-4">
+          <div class="card h-100">
+            <div class="card-body text-center">
+              <div class="mb-3">
+                <i class="fas fa-quote-left fa-2x text-muted"></i>
+              </div>
+              <p class="card-text">"El servicio es excelente y el ambiente muy acogedor. Recomiendo el capuchino con canela, ¡espectacular!"</p>
+              <div class="mt-4">
+                <h5 class="mb-1">Carlos Rodríguez</h5>
+                <div class="text-warning">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star-half-alt"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-4">
+          <div class="card h-100">
+            <div class="card-body text-center">
+              <div class="mb-3">
+                <i class="fas fa-quote-left fa-2x text-muted"></i>
+              </div>
+              <p class="card-text">"Siempre que visito Tijuana paso por La Taza Loca. Tienen una variedad impresionante y los precios son justos."</p>
+              <div class="mt-4">
+                <h5 class="mb-1">Luisa González</h5>
+                <div class="text-warning">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="text-center mt-5">
+        <a href="https://latazaloca.com/blog/dejanos-tu-mensaje/" class="btn btn-outline-primary" target="_blank">
+          <i class="fas fa-comment me-2"></i>Deja tu comentario
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer Mejorado -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4 mb-4 mb-md-0">
+          <h5 class="mb-3">La Taza Loca</h5>
+          <p>Café de especialidad preparado con pasión y dedicación en Tijuana.</p>
+        </div>
+        
+        <div class="col-md-4 mb-4 mb-md-0">
+          <h5 class="mb-3">Enlaces Rápidos</h5>
+          <ul class="list-unstyled">
+            <li class="mb-2"><a href="#menu" class="text-white text-decoration-none">Menú</a></li>
+            <li class="mb-2"><a href="#nosotros" class="text-white text-decoration-none">Sobre Nosotros</a></li>
+            <li class="mb-2"><a href="#contacto" class="text-white text-decoration-none">Contacto</a></li>
+          </ul>
+        </div>
+        
+        <div class="col-md-4">
+          <h5 class="mb-3">Síguenos</h5>
+          <div class="social-links">
+            <a href="https://www.facebook.com/share/16VwkYLE5K/" class="text-white me-3" target="_blank">
+              <i class="fab fa-facebook-f fa-lg"></i>
+            </a>
+            <a href="https://www.instagram.com/" class="text-white me-3" target="_blank">
+              <i class="fab fa-instagram fa-lg"></i>
+            </a>
+            <a href="https://wa.me/526641273236" class="text-white" target="_blank">
+              <i class="fab fa-whatsapp fa-lg"></i>
+            </a>
+          </div>
+          
+          <div class="mt-4">
+            <p class="small mb-0">
+              <i class="fas fa-users me-1"></i> <span id="contador-vistas">+1,200 personas nos visitaron esta semana</span>
+            </p>
+          </div>
+        </div>
+      </div>
+      
+      <hr class="my-4 bg-light opacity-25">
+      
+      <div class="text-center">
+        <p class="small mb-0">© 2025 La Taza Loca. Todos los derechos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Botones Flotantes Mejorados -->
+  <a href="https://wa.me/526641273236" class="btn btn-success btn-lg rounded-circle btn-whatsapp" target="_blank" title="WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+  
+  <a href="https://www.facebook.com/share/16VwkYLE5K/" class="btn btn-primary btn-lg rounded-circle btn-facebook" target="_blank" title="Facebook">
+    <i class="fab fa-facebook-f"></i>
+  </a>
+  
+  <button class="btn btn-secondary rounded-circle btn-top" onclick="scrollToTop()" title="Volver arriba">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Botón "Volver arriba"
+    window.onscroll = function() {
+      const btn = document.querySelector('.btn-top');
+      if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+        btn.style.display = 'flex';
+      } else {
+        btn.style.display = 'none';
+      }
+    };
+    
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    
+    // Contador de visitas (ejemplo)
+    document.addEventListener('DOMContentLoaded', function() {
+      // Simulamos un contador (en producción usarías tu API)
+      const contador = document.getElementById('contador-vistas');
+      const visitas = Math.floor(Math.random() * 500) + 1200;
+      contador.textContent = `+${visitas.toLocaleString()} personas nos visitaron esta semana`;
+    });
+  </script>
 </body>
 </html>
