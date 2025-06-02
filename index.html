@@ -3,515 +3,819 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>La Taza Loca</title>
+  <title>La Taza Loca - Café de Especialidad en Tijuana</title>
+  <meta name="description" content="La Taza Loca - El mejor café de especialidad en Tijuana. Ordena tu café favorito y recógelo en minutos. Lunes a Viernes 8AM-12PM, Sábados y Domingos 8AM-6PM.">
+  
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
-  
   <style>
-    body {
-      font-family: 'Roboto Condensed', sans-serif;
-      background-color: #f3e5d3;
-      color: #5b3923;
-      text-align: center;
-      margin: 0;
-      padding: 0;
+    :root {
+      --primary-brown: #5b3923;
+      --secondary-brown: #7b5237;
+      --light-brown: #8B4513;
+      --cream: #f3e5d3;
+      --dark-cream: #e8d5c1;
+      --gold: #D4AF37;
+      --coffee-gradient: linear-gradient(135deg, #5b3923 0%, #7b5237 50%, #8B4513 100%);
+      --shadow-soft: 0 10px 30px rgba(91, 57, 35, 0.15);
+      --shadow-hover: 0 15px 40px rgba(91, 57, 35, 0.25);
     }
 
-  
-    .section h2 {
-      color: #5b3923;
-      margin-bottom: 20px;
+    * {
+      scroll-behavior: smooth;
     }
-    iframe {
-      width: 100%;
-      max-width: 600px;
-      height: 300px;
-      border: 0;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, var(--cream) 0%, #f8f1e6 100%);
+      color: var(--primary-brown);
+      line-height: 1.6;
+      overflow-x: hidden;
     }
-    footer {
-      background-color: #5b3923;
+
+    /* Header mejorado con animaciones */
+    .main-header {
+      background: var(--coffee-gradient);
       color: white;
-      padding: 15px 10px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow-soft);
     }
-    #topBtn {
-      display: none;
+
+    .main-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="coffee-beans" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="2" fill="white" opacity="0.05"/></pattern></defs><rect width="100" height="100" fill="url(%23coffee-beans)"/></svg>');
+      pointer-events: none;
+    }
+
+    .header-content {
+      position: relative;
+      z-index: 2;
+      padding: 2rem 0;
+    }
+
+    .logo-container {
+      transition: transform 0.3s ease;
+    }
+
+    .logo-container:hover {
+      transform: scale(1.05);
+    }
+
+    .main-logo {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 4px solid var(--gold);
+      box-shadow: var(--shadow-soft);
+      transition: all 0.3s ease;
+    }
+
+    .brand-title {
+      font-family: 'Dancing Script', cursive;
+      font-size: 3rem;
+      font-weight: 700;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+      margin: 0;
+      background: linear-gradient(45deg, #fff, var(--gold));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .brand-subtitle {
+      font-size: 1.1rem;
+      opacity: 0.9;
+      margin: 0.5rem 0;
+    }
+
+    .schedule-info {
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      padding: 1rem;
+      margin-top: 1rem;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    /* Navegación mejorada */
+    .main-nav {
+      background: rgba(123, 82, 55, 0.95);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      transition: all 0.3s ease;
+    }
+
+    .nav-link {
+      color: white !important;
+      font-weight: 600;
+      padding: 1rem 1.5rem !important;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .nav-link::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 3px;
+      background: var(--gold);
+      transition: all 0.3s ease;
+      transform: translateX(-50%);
+    }
+
+    .nav-link:hover::before {
+      width: 80%;
+    }
+
+    .nav-link:hover {
+      color: var(--gold) !important;
+      transform: translateY(-2px);
+    }
+
+    /* Secciones mejoradas */
+    .section {
+      padding: 4rem 0;
+      position: relative;
+    }
+
+    .section-title {
+      font-family: 'Dancing Script', cursive;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--primary-brown);
+      text-align: center;
+      margin-bottom: 3rem;
+      position: relative;
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 3px;
+      background: var(--gold);
+      border-radius: 2px;
+    }
+
+    /* Hero del menú mejorado */
+    .menu-hero {
+      background: linear-gradient(135deg, rgba(91, 57, 35, 0.1) 0%, rgba(123, 82, 55, 0.05) 100%);
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: var(--shadow-soft);
+      margin-bottom: 2rem;
+    }
+
+    .menu-image {
+      border-radius: 15px;
+      box-shadow: var(--shadow-hover);
+      transition: transform 0.3s ease;
+      width: 100%;
+      max-width: 800px;
+    }
+
+    .menu-image:hover {
+      transform: scale(1.02);
+    }
+
+    /* Cards mejoradas */
+    .info-card {
+      background: white;
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: var(--shadow-soft);
+      transition: all 0.3s ease;
+      border: 1px solid rgba(91, 57, 35, 0.1);
+      height: 100%;
+    }
+
+    .info-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .info-card .icon {
+      font-size: 3rem;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+
+    /* Botones mejorados */
+    .btn-coffee {
+      background: var(--coffee-gradient);
+      border: none;
+      border-radius: 25px;
+      padding: 0.8rem 2rem;
+      color: white;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-coffee::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: all 0.5s ease;
+    }
+
+    .btn-coffee:hover::before {
+      left: 100%;
+    }
+
+    .btn-coffee:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-hover);
+      color: white;
+    }
+
+    /* WhatsApp buttons mejorados */
+    .whatsapp-btn {
+      background: #25D366;
+      color: white;
+      border-radius: 25px;
+      padding: 0.8rem 1.5rem;
+      text-decoration: none;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .whatsapp-btn:hover {
+      background: #1ea952;
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    /* Mapa mejorado */
+    .map-container {
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: var(--shadow-soft);
+      margin-top: 2rem;
+    }
+
+    .map-container iframe {
+      width: 100%;
+      height: 400px;
+      border: none;
+    }
+
+    /* Modal mejorado */
+    .modal-content {
+      border-radius: 20px;
+      border: none;
+      box-shadow: var(--shadow-hover);
+    }
+
+    .modal-header {
+      background: var(--coffee-gradient);
+      color: white;
+      border-radius: 20px 20px 0 0;
+      padding: 1.5rem 2rem;
+    }
+
+    .modal-title {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+
+    .form-check-input:checked {
+      background-color: var(--gold);
+      border-color: var(--gold);
+    }
+
+    .total-display {
+      background: var(--coffee-gradient);
+      color: white;
+      padding: 1rem 2rem;
+      border-radius: 15px;
+      font-size: 1.2rem;
+      font-weight: 700;
+      text-align: center;
+      margin: 1rem 0;
+    }
+
+    /* Botones flotantes mejorados */
+    .floating-btn {
       position: fixed;
-      bottom: 30px;
-      right: 25px;
-      z-index: 99;
-      font-size: 20px;
-      background-color: #7b5237;
+      right: 20px;
+      z-index: 1040;
+      border-radius: 25px;
+      padding: 0.8rem 1.5rem;
+      font-weight: 600;
+      box-shadow: var(--shadow-hover);
+      transition: all 0.3s ease;
+    }
+
+    .floating-btn:hover {
+      transform: scale(1.05);
+    }
+
+    .order-btn {
+      bottom: 180px;
+      background: var(--gold);
+      border: none;
+      color: var(--primary-brown);
+    }
+
+    .whatsapp-float {
+      bottom: 110px;
+      background: #25D366;
+      border: none;
+      color: white;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .facebook-float {
+      bottom: 40px;
+      background: #1877F2;
+      border: none;
+      color: white;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Footer mejorado */
+    .main-footer {
+      background: var(--coffee-gradient);
+      color: white;
+      padding: 3rem 0 1rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .main-footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="coffee-pattern" x="0" y="0" width="15" height="15" patternUnits="userSpaceOnUse"><circle cx="7.5" cy="7.5" r="1" fill="white" opacity="0.03"/></pattern></defs><rect width="100" height="100" fill="url(%23coffee-pattern)"/></svg>');
+      pointer-events: none;
+    }
+
+    .footer-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .social-links a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 45px;
+      height: 45px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 50%;
+      color: white;
+      text-decoration: none;
+      margin: 0 0.5rem;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    .social-links a:hover {
+      background: var(--gold);
+      transform: translateY(-3px);
+      color: var(--primary-brown);
+    }
+
+    /* Botón scroll to top mejorado */
+    .scroll-top {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 50px;
+      height: 50px;
+      background: var(--coffee-gradient);
       color: white;
       border: none;
-      outline: none;
-      padding: 12px 16px;
       border-radius: 50%;
+      display: none;
+      align-items: center;
+      justify-content: center;
       cursor: pointer;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      transition: all 0.3s ease;
+      z-index: 999;
+      box-shadow: var(--shadow-soft);
     }
-    #topBtn:hover {
-      background-color: #5b3923;
+
+    .scroll-top:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-hover);
     }
-   h1, h2, h3, h4, h5, h6{
-      font-weight:bold;
+
+    /* Contador de visitas */
+    .visit-counter {
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      padding: 1rem;
+      text-align: center;
+      margin: 1rem 0;
+      border: 1px solid rgba(255,255,255,0.2);
     }
-.my-frame {
-    background-color: #f3e5d3; /* Fondo beige (puedes ajustar el color aquí) */
-  height: 165px !important;
-}
-    #logo {
-  max-height: 120px;
-  height: auto;
-  width: auto;
-}
 
-    .header-container {
-   position: relative;
-  height: 120px; /* altura suficiente */
-  padding-left: 120px; /* espacio para el logo a la izquierda */
-  background-color: #5b3923;
-  color: white;
-  display: flex;
-  flex-direction: column;
-  justify-content: center; /* centra verticalmente el texto */
-  align-items: center; /* centra horizontalmente el texto */
-  text-align: center;
-}
+    /* Métodos de pago mejorados */
+    .payment-methods {
+      background: white;
+      border-radius: 20px;
+      padding: 3rem 2rem;
+      box-shadow: var(--shadow-soft);
+    }
 
-.logo-positioned {
-  position: absolute;
-  left: 20px;   /* ajusta para que quede cerca del borde */
-  top: 50%;
-  transform: translateY(-50%);
-  width: auto;
-  z-index: 10;
-}
+    .payment-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      transition: all 0.3s ease;
+    }
 
-      .navbar-toggler-icon {
-    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255,255,255,1)' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
-  }
-  #btn-facebook {
-  position: fixed;
-  bottom: 160px;
-  width: 56px;
-  height: 56px;
-  right: 20px;
-  z-index: 1030; /* o incluso 1000 es suficiente */
-  border-radius: 50%;
-  transition: transform 0.2s ease-in-out;
-}
-#btn-facebook img {
-  border-radius: 50%;
-}
-#btn-facebook:hover {
-  transform: scale(1.1);
-}
-    .floating-btn {
-  position: fixed;
-  bottom: 100px; 
-  right: 20px;
-  z-index: 9999;
-}
+    .payment-method:hover .payment-icon {
+      transform: scale(1.1);
+    }
+
+    /* Animaciones */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-on-scroll {
+      animation: fadeInUp 0.8s ease forwards;
+    }
+
+    /* Responsive improvements */
+    @media (max-width: 768px) {
+      .brand-title {
+        font-size: 2rem;
+      }
+      
+      .header-content {
+        padding: 1.5rem 0;
+      }
+      
+      .main-logo {
+        width: 80px;
+        height: 80px;
+      }
+      
+      .section {
+        padding: 2rem 0;
+      }
+      
+      .floating-btn {
+        right: 15px;
+      }
+      
+      .order-btn {
+        bottom: 160px;
+      }
+      
+      .whatsapp-float {
+        bottom: 90px;
+      }
+      
+      .facebook-float {
+        bottom: 30px;
+      }
+    }
+
+    /* Loading animation */
+    .loading {
+      opacity: 0;
+      animation: fadeIn 0.5s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
   </style>
 </head>
-<body>
 
-<!-- Modal del formulario de pedido -->
-<div class="modal fade" id="pedidoModal" tabindex="-1" aria-labelledby="pedidoModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-    <div class="modal-content">
-      <div class="modal-header bg-warning text-dark">
-        <h5 class="modal-title">Tu pedido en La Taza Loca</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-      </div>
-      <div class="modal-body">
-        <form id="formulario-pedido">
-          <div class="mb-4">
-            <label class="form-label fw-bold">1. ¿Qué prefieres?</label>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="categoria" value="cafe" id="radioCafe">
-              <label class="form-check-label" for="radioCafe">Café</label>
-            </div>
-            <div id="seccion-cafe" class="ms-3 mt-2" style="display:none">
-              <div class="form-check"><input class="form-check-input opcion" type="checkbox" name="bebidas" value="Americano" data-precio="55" id="americano"><label class="form-check-label" for="americano">Americano ($55)</label></div>
-              <div class="form-check"><input class="form-check-input opcion" type="checkbox" name="bebidas" value="Expresso" data-precio="50" id="expresso"><label class="form-check-label" for="expresso">Expresso ($50)</label></div>
-              <div class="form-check"><input class="form-check-input opcion" type="checkbox" name="bebidas" value="Latte" data-precio="60" id="latte"><label class="form-check-label" for="latte">Latte ($60)</label></div>
-              <div class="form-check"><input class="form-check-input opcion" type="checkbox" name="bebidas" value="Latte Caramelo" data-precio="65" id="latteCaramelo"><label class="form-check-label" for="latteCaramelo">Latte Caramelo ($65)</label></div>
-              <div class="form-check"><input class="form-check-input opcion" type="checkbox" name="bebidas" value="Latte Vainilla" data-precio="65" id="latteVainilla"><label class="form-check-label" for="latteVainilla">Latte Vainilla ($65)</label></div>
-              <div class="form-check"><input class="form-check-input opcion" type="checkbox" name="bebidas" value="Latte Avellana" data-precio="65" id="latteAvellana"><label class="form-check-label" for="latteAvellana">Latte Avellana ($65)</label></div>
-              <div class="form-check"><input class="form-check-input opcion" type="checkbox" name="bebidas" value="Latte Crema Irlandesa" data-precio="65" id="latteIrlandesa"><label class="form-check-label" for="latteIrlandesa">Latte Crema Irlandesa ($65)</label></div>
-              <div class="form-check"><input class="form-check-input opcion" type="checkbox" name="bebidas" value="Latte Moka" data-precio="75" id="latteMoka"><label class="form-check-label" for="latteMoka">Latte Moka ($75)</label></div>
-              <div class="form-check"><input class="form-check-input opcion" type="checkbox" name="bebidas" value="Latte Moka Oscuro" data-precio="75" id="latteMokaOscuro"><label class="form-check-label" for="latteMokaOscuro">Latte Moka Oscuro ($75)</label></div>
-            </div>
-
-            <div class="form-check mt-3">
-              <input class="form-check-input" type="radio" name="categoria" value="sin-cafe" id="radioSinCafe">
-              <label class="form-check-label" for="radioSinCafe">Sin Café</label>
-            </div>
-            <div id="seccion-sin-cafe" class="ms-3 mt-2" style="display:none">
-              <div class="form-check"><input class="form-check-input opcion" type="checkbox" name="bebidas" value="Chocolate Amargo" data-precio="70" id="chocoAmargo"><label class="form-check-label" for="chocoAmargo">Chocolate Amargo ($70)</label></div>
-              <div class="form-check"><input class="form-check-input opcion" type="checkbox" name="bebidas" value="Chocolate Blanco" data-precio="70" id="chocoBlanco"><label class="form-check-label" for="chocoBlanco">Chocolate Blanco ($70)</label></div>
-              <div class="form-check"><input class="form-check-input opcion" type="checkbox" name="bebidas" value="Chai" data-precio="70" id="chai"><label class="form-check-label" for="chai">Chai ($70)</label></div>
-            </div>
-
-            <div class="form-check mt-3">
-              <input class="form-check-input" type="radio" name="categoria" value="frappe" id="radioFrappe">
-              <label class="form-check-label" for="radioFrappe">Frappés</label>
-            </div>
-            <div id="seccion-frappe" class="ms-3 mt-2" style="display:none">
-              <div class="form-check"><input class="form-check-input opcion" type="checkbox" name="bebidas" value="Moka Oscuro" data-precio="75" id="mokaOscuro"><label class="form-check-label" for="mokaOscuro">Moka Oscuro ($75)</label></div>
-              <div class="form-check"><input class="form-check-input opcion" type="checkbox" name="bebidas" value="Moka Blanco" data-precio="75" id="mokaBlanco"><label class="form-check-label" for="mokaBlanco">Moka Blanco ($75)</label></div>
-              <div class="form-check"><input class="form-check-input opcion" type="checkbox" name="bebidas" value="Gansito" data-precio="75" id="gansito"><label class="form-check-label" for="gansito">Gansito ($75)</label></div>
-              <div class="form-check"><input class="form-check-input opcion" type="checkbox" name="bebidas" value="Oreo" data-precio="75" id="oreo"><label class="form-check-label" for="oreo">Oreo ($75)</label></div>
-              <div class="form-check"><input class="form-check-input opcion" type="checkbox" name="bebidas" value="Mazapán" data-precio="75" id="mazapan"><label class="form-check-label" for="mazapan">Mazapán ($75)</label></div>
-            </div>
-          </div>
-
-          <div class="mb-4">
-            <h6>Extras ✨</h6>
-            <div class="form-check"><input class="form-check-input opcion" type="checkbox" name="extras" value="Shot de café" data-precio="25" id="shotCafe"><label class="form-check-label" for="shotCafe">Shot de café ($25)</label></div>
-            <div class="form-check"><input class="form-check-input opcion" type="checkbox" name="extras" value="Leche" data-precio="35" id="leche"><label class="form-check-label" for="leche">Leche ($35)</label></div>
-          </div>
-        </form>
-
-        <!-- Mostrar total en vivo -->
-        <div class="text-center fw-bold fs-5" id="totalDisplay">💵 Total: $0</div>
-
-        <div id="confirmacion" class="alert alert-success d-none text-center mt-3" role="alert">
-          ✅ Pedido realizado. ¡Gracias!
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-success w-100" onclick="enviarWhatsapp()">Enviar por WhatsApp</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Header -->
-<header class="bg-[#5b3923] text-white px-4 py-6 shadow-lg">
-  <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-    <!-- Logo -->
-    <a href="#top" class="flex-shrink-0">
-      <img src="logo3.png" alt="Logo La Taza Loca" class="h-24 w-auto rounded-full shadow-md">
-    </a>
-
-    <!-- Título y descripción -->
-    <div class="text-center md:text-left">
-      <h1 class="text-4xl font-extrabold tracking-tight">La Taza Loca ☕</h1>
-      <p class="text-sm italic">¿Antojo de café? ¡Escríbenos y recógelo en minutos!</p>
-      <div class="mt-2 text-sm">
-        <strong>Horario:</strong><br>
-        <span class="block">Lunes a Viernes: 8:00 AM - 12:00 PM</span>
-        <span class="block">Sábado y Domingo: 8:00 AM - 6:00 PM</span>
-      </div>
-    </div>
-  </div>
-</header>
-
-<!-- Barra de navegación -->
-<nav class="bg-[#7b5237] text-white">
-  <div class="max-w-6xl mx-auto px-4 py-3 flex flex-wrap items-center justify-center gap-6 text-sm font-semibold">
-    <a href="#menu" class="hover:text-yellow-300 flex items-center gap-1"><i class="fas fa-mug-hot"></i> Menú</a>
-    <a href="#nosotros" class="hover:text-yellow-300 flex items-center gap-1"><i class="fas fa-users"></i> Nosotros</a>
-    <a href="#contacto" class="hover:text-yellow-300 flex items-center gap-1"><i class="fas fa-map-marker-alt"></i> Contacto</a>
-    <a href="#pedido" class="hover:text-yellow-300 flex items-center gap-1"><i class="fas fa-shopping-cart"></i> Haz tu pedido</a>
-    <a href="https://latazaloca.com/blog/dejanos-tu-mensaje/" target="_blank" class="hover:text-yellow-300 flex items-center gap-1"><i class="fas fa-comment-dots"></i> Comentario</a>
-  </div>
-</nav>
-  <section class="hero py-5" id="menu">
-  <div class="container">
-    <h2>Menú</h2>
-    <img src="menu-taza-loca3.jpg" alt="Menú La Taza Loca" class="img-fluid">
-  </div>
-</section>
-
-  
-<section class="section py-5" id="nosotros">
-  <div class="container">
-    <h2>Sobre Nosotros</h2>
-    <p>En La Taza Loca, nos apasiona el buen café. Desde los granos seleccionados hasta la última gota en tu taza, cada bebida es preparada con amor.
-    Nuestro objetivo es ofrecerte una experiencia cálida, auténtica y llena de sabor.</p>
-  </div>
-</section>
-
-<section class="section py-5" id="contacto">
-  <div class="container">
-    <h2>Contáctanos</h2>
-    <div class="mb-3">
-      <a href="https://wa.me/526641273236" target="_blank" class="mx-3 text-success fw-bold text-decoration-none">
-        <i class="fab fa-whatsapp"></i> 664-127-32-36
-      </a>
-      <a href="https://wa.me/526645631675" target="_blank" class="mx-3 text-success fw-bold text-decoration-none">
-        <i class="fab fa-whatsapp"></i> 664-563-16-75
-      </a>
-    </div>
-    <iframe src="https://www.google.com/maps?q=Ruta+Mariano+Abasolo+7908,+Mariano+Matamoros,+22206+Tijuana,+B.C.,+México&output=embed" allowfullscreen></iframe>
-  </div>
-
-</section>
-  <section class="section py-5" id="pedido">
-  <div class="container">
-    <h2>Realiza tu pedido:</h2>
-    <a href="https://latazaloca.com/ordena.html" target="_blank" class="text-blue-600 underline hover:text-blue-800">
-      Ir a la página de pedidos 🛒
-    </a>
-  </div>
-</section>
-
-  <section class="section py-5" id="blog">
-  <div class="container">
-    <h2>Comentarios de Nuestros Clientes</h2>
-    
-
-
-    <iframe src="https://latazaloca.com/Comentarios.html" width="100%" height="500" style="border:0;"></iframe>
-  </div>
-</section>
-
-<section class="section py-5">
-  <div class="container">
-   <!-- <a href="https://www.freecounterstat.com" title="free stat counter"><img src="https://counter4.optistats.ovh/private/freecounterstat.php?c=sj2jyek4fub7htm46u4z3balspj5u7tj" border="0" title="free stat counter" alt="free stat counter"></a> -->
-    <!-- <img src="https://latazaloca.com/notificar.php" style="display: none;" alt="contador oculto"> -->
-    <div id="contador-vistas" style="font-weight: bold; font-size: 24px; color: #4b2e1d; margin: 15px 0;">
-    </div>
-  </div>
-</section>
-
-<!-- Botón flotante "Arma tu pedido" -->
-<button class="btn btn-warning rounded-pill shadow floating-btn" style="position: fixed; bottom: 220px; right: 20px; z-index: 1040; display:none;" data-bs-toggle="modal" data-bs-target="#pedidoModal">
-  ☕ Arma tu pedido
-</button>
-  
-<a href="https://wa.me/526641273236" class="btn btn-success rounded-circle"
-   style="position: fixed; bottom: 90px; right: 20px; z-index: 999; width: 56px; height: 56px; display: flex; align-items: center; justify-content: center;"
-   target="_blank" title="Chatea con nosotros por WhatsApp">
-   <i class="fab fa-whatsapp fa-lg"></i>
-</a>
-
-<section class="section py-5 bg-light" id="pagos">
-  <div class="container">
-    <h2 class="mb-4">Métodos de Pago</h2>
-    <p>Aceptamos las siguientes formas de pago:</p>
-    <div class="d-flex justify-content-center gap-5 flex-wrap mt-4">
-      <div class="text-center">
-        <i class="bi bi-cash-coin fs-1 text-success"></i><br>
-        <small class="fw-bold">Efectivo</small>
-      </div>
-      <div class="text-center">
-        <i class="bi bi-bank fs-1 text-primary"></i><br>
-        <small class="fw-bold">Transferencia</small>
-      </div>
-
-      <div class="text-center">
-        <i class="bi bi-credit-card fs-1 text-primary"></i><br>
-        <small class="fw-bold">Pago con Tarjeta</small>
-      </div>
-    </div>
-  </div>
-</section>
-<footer>
+<body class="loading">
+  <!-- Header Principal -->
+  <header class="main-header">
     <div class="container">
+      <div class="header-content">
+        <div class="row align-items-center">
+          <div class="col-md-3 text-center">
+            <div class="logo-container">
+              <img src="logo3.png" alt="Logo La Taza Loca" class="main-logo">
+            </div>
+          </div>
+          <div class="col-md-9 text-center text-md-start">
+            <h1 class="brand-title">La Taza Loca</h1>
+            <p class="brand-subtitle">
+              <i class="fas fa-coffee me-2"></i>
+              ¿Antojo de café? ¡Escríbenos y recógelo en minutos!
+            </p>
+            <div class="schedule-info">
+              <h6 class="mb-2"><i class="fas fa-clock me-2"></i>Horarios de Atención</h6>
+              <div class="row">
+                <div class="col-md-6">
+                  <strong>Lunes a Viernes</strong><br>
+                  8:00 AM - 12:00 PM
+                </div>
+                <div class="col-md-6">
+                  <strong>Fines de Semana</strong><br>
+                  8:00 AM - 6:00 PM
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Navegación -->
+  <nav class="navbar navbar-expand-lg main-nav">
+    <div class="container">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      
+      <div class="collapse navbar-collapse justify-content-center" id="mainNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="#menu">
+              <i class="fas fa-mug-hot me-2"></i>Menú
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#nosotros">
+              <i class="fas fa-users me-2"></i>Nosotros
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#contacto">
+              <i class="fas fa-map-marker-alt me-2"></i>Contacto
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#pedido">
+              <i class="fas fa-shopping-cart me-2"></i>Pedidos
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#comentarios">
+              <i class="fas fa-star me-2"></i>Reseñas
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Sección Menú -->
+  <section class="section" id="menu">
+    <div class="container">
+      <h2 class="section-title">Nuestro Menú</h2>
+      <div class="menu-hero text-center animate-on-scroll">
+        <p class="lead mb-4">Descubre nuestra selección de cafés de especialidad, preparados con los mejores granos y mucho amor.</p>
+        <img src="menu-taza-loca3.jpg" alt="Menú La Taza Loca" class="menu-image">
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección Nosotros -->
+  <section class="section" id="nosotros" style="background: rgba(255,255,255,0.5);">
+    <div class="container">
+      <h2 class="section-title">Sobre Nosotros</h2>
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="info-card text-center animate-on-scroll">
+            <div class="icon">
+              <i class="fas fa-heart"></i>
+            </div>
+            <h4 class="mb-3">Pasión por el Café</h4>
+            <p class="lead">En La Taza Loca, nos apasiona el buen café. Desde los granos seleccionados hasta la última gota en tu taza, cada bebida es preparada con amor y dedicación.</p>
+            <p>Nuestro objetivo es ofrecerte una experiencia cálida, auténtica y llena de sabor que despierte todos tus sentidos y haga de cada momento algo especial.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección Contacto -->
+  <section class="section" id="contacto">
+    <div class="container">
+      <h2 class="section-title">Contáctanos</h2>
       <div class="row">
-        <div class="col-md-4 mb-4 mb-md-0">
-          <h5 class="mb-3">La Taza Loca</h5>
-          <p>Café de especialidad preparado con pasión y dedicación en Tijuana.</p>
+        <div class="col-lg-6 mb-4">
+          <div class="info-card animate-on-scroll">
+            <div class="icon">
+              <i class="fas fa-phone"></i>
+            </div>
+            <h4 class="mb-3">Teléfonos de Contacto</h4>
+            <div class="d-flex flex-column gap-3">
+              <a href="https://wa.me/526641273236" target="_blank" class="whatsapp-btn">
+                <i class="fab fa-whatsapp"></i>
+                664-127-32-36
+              </a>
+              <a href="https://wa.me/526645631675" target="_blank" class="whatsapp-btn">
+                <i class="fab fa-whatsapp"></i>
+                664-563-16-75
+              </a>
+            </div>
+          </div>
         </div>
-        
-        <div class="col-md-4 mb-4 mb-md-0">
-          <h5 class="mb-3">Enlaces Rápidos</h5>
-          <ul class="list-unstyled">
-            <li class="mb-2"><a href="#menu" class="text-white text-decoration-none">Menú</a></li>
-            <li class="mb-2"><a href="#nosotros" class="text-white text-decoration-none">Sobre Nosotros</a></li>
-            <li class="mb-2"><a href="#contacto" class="text-white text-decoration-none">Contacto</a></li>
-          </ul>
+        <div class="col-lg-6 mb-4">
+          <div class="info-card animate-on-scroll">
+            <div class="icon">
+              <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <h4 class="mb-3">Nuestra Ubicación</h4>
+            <p><strong>Ruta Mariano Abasolo 7908</strong><br>
+            Mariano Matamoros, 22206<br>
+            Tijuana, B.C., México</p>
+          </div>
         </div>
-        
-        <div class="col-md-4">
-          <h5 class="mb-3">Síguenos</h5>
-          <div class="social-links">
-            <a href="https://www.facebook.com/share/16VwkYLE5K/" class="text-white me-3" target="_blank">
-              <i class="fab fa-facebook-f fa-lg"></i>
-            </a>
-            <a href="https://www.instagram.com/" class="text-white me-3" target="_blank">
-              <i class="fab fa-instagram fa-lg"></i>
-            </a>
-            <a href="https://wa.me/526641273236" class="text-white" target="_blank">
-              <i class="fab fa-whatsapp fa-lg"></i>
+      </div>
+      
+      <div class="map-container animate-on-scroll">
+        <iframe 
+          src="https://www.google.com/maps?q=Ruta+Mariano+Abasolo+7908,+Mariano+Matamoros,+22206+Tijuana,+B.C.,+México&output=embed"
+          allowfullscreen
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección Pedidos -->
+  <section class="section" id="pedido" style="background: rgba(255,255,255,0.5);">
+    <div class="container text-center">
+      <h2 class="section-title">Realiza tu Pedido</h2>
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="info-card animate-on-scroll">
+            <div class="icon">
+              <i class="fas fa-shopping-cart"></i>
+            </div>
+            <h4 class="mb-3">¡Ordena tu café favorito!</h4>
+            <p class="mb-4">Arma tu pedido personalizado y recógelo en minutos. Tenemos todas las opciones que más te gustan.</p>
+            <div class="d-flex gap-3 justify-content-center flex-wrap">
+              <button class="btn btn-coffee" data-bs-toggle="modal" data-bs-target="#pedidoModal">
+                <i class="fas fa-coffee me-2"></i>Armar Pedido
+              </button>
+              <a href="https://latazaloca.com/ordena.html" target="_blank" class="btn btn-outline-primary">
+                <i class="fas fa-external-link-alt me-2"></i>Página de Pedidos
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección Métodos de Pago -->
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">Métodos de Pago</h2>
+      <div class="payment-methods animate-on-scroll">
+        <p class="text-center lead mb-4">Aceptamos las siguientes formas de pago para tu comodidad:</p>
+        <div class="row text-center">
+          <div class="col-md-4 mb-4">
+            <div class="payment-method">
+              <div class="payment-icon text-success">
+                <i class="bi bi-cash-coin"></i>
+              </div>
+              <h5>Efectivo</h5>
+              <p>Pago en efectivo al momento de recoger tu pedido</p>
+            </div>
+          </div>
+          <div class="col-md-4 mb-4">
+            <div class="payment-method">
+              <div class="payment-icon text-primary">
+                <i class="bi bi-bank"></i>
+              </div>
+              <h5>Transferencia</h5>
+              <p>Transferencia bancaria directa</p>
+            </div>
+          </div>
+          <div class="col-md-4 mb-4">
+            <div class="payment-method">
+              <div class="payment-icon text-info">
+                <i class="bi bi-credit-card"></i>
+              </div>
+              <h5>Tarjeta</h5>
+              <p>Pagos con tarjeta de débito o crédito</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección Comentarios -->
+  <section class="section" id="comentarios" style="background: rgba(255,255,255,0.5);">
+    <div class="container">
+      <h2 class="section-title">Lo que Dicen Nuestros Clientes</h2>
+      <div class="animate-on-scroll">
+        <div class="info-card">
+          <div class="text-center mb-3">
+            <div class="icon">
+              <i class="fas fa-star"></i>
+            </div>
+            <h4>Reseñas y Comentarios</h4>
+            <p class="mb-4">Conoce las experiencias de nuestros clientes satisfechos</p>
+          </div>
+          <div style="border-radius: 15px; overflow: hidden; box-shadow: var(--shadow-soft);">
+            <iframe 
+              src="https://latazaloca.com/Comentarios.html" 
+              width="100%" 
+              height="500" 
+              style="border:0;"
+              loading="lazy">
+            </iframe>
+          </div>
+          <div class="text-center mt-3">
+            <a href="https://latazaloca.com/blog/dejanos-tu-mensaje/" target="_blank" class="btn btn-coffee">
+              <i class="fas fa-comment me-2"></i>Deja tu Comentario
             </a>
           </div>
-          
-          <div class="mt-4">
-            <p class="small mb-0">
-              <i class="fas fa-users me-1"></i> <span id="contador-vistas2"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="main-footer">
+    <div class="container footer-content">
+      <div class="row">
+        <div class="col-md-4 mb-4">
+          <h5 class="mb-3">La Taza Loca</h5>
+          <p>Café de especialidad preparado con pasión y dedicación en Tijuana. Cada taza cuenta una historia de sabor y calidad.</p>
+          <div class="visit-counter">
+            <p class="mb-0">
+              <i class="fas fa-users me-2"></i>
+              <span id="contador-vistas">Cargando visitas...</span>
             </p>
           </div>
         </div>
-      </div>
-      
-      <hr class="my-4 bg-light opacity-25">
-      
-      <div class="text-center">
-        <p class="small mb-0">© 2025 La Taza Loca. Todos los derechos reservados.</p>
+        
+        <div class="col-md-4 mb-4">
+          <h5 class="mb-3">Enlaces Rápidos</h5>
+          <ul class="list-unstyled">
+            <li class="mb-2"><a href="#menu" class="text-white text-decoration-none">Nuestro Menú</a></li>
+            <li class="mb-2"><a href="#nosotros" class="text-white text-decoration-none">Sobre Nosotros</a></li>
+            <li class="mb-2"><a href="#contacto" class="text-white text-decoration-none">Contacto</a></li>
+            <li class="mb-2"><a href="#pedido" class="text-white text-decoration-none">Realizar Pedido</a></li>
+          </ul>
+        </div>
       </div>
     </div>
   </footer>
-
-<!-- Botón de scroll hacia arriba -->
-<button id="topBtn" onclick="scrollToTop()" title="Volver arriba">
-  <i class="fas fa-arrow-up"></i>
-</button>
-
-<script>
-  window.onscroll = function() { toggleTopButton(); };
-  function toggleTopButton() {
-    const btn = document.getElementById("topBtn");
-    if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
-      btn.style.display = "block";
-    } else {
-      btn.style.display = "none";
-    }
-  }
-  function scrollToTop() {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
-  window.onload = function() {
-  //document.body.style.backgroundColor = 'green';
-};
-
-  document.addEventListener('DOMContentLoaded', function() {
-    // Obtener el iframe usando la clase 'my-frame'
-    const iframe = document.querySelector('.my-frame');
-
-    console.log("iframe::" + iframe);
-    
-    // Verificar si el iframe existe
-    if (iframe) {
-        // Cambiar el fondo del iframe a un color específico (beige en este caso)
-        iframe.style.backgroundColor = '#f1e1b7'; // Cambia el color si es necesario
-        
-        // Eliminar borde del iframe
-        iframe.style.border = 'none';
-
-        // Ajustar el tamaño del iframe
-        iframe.style.width = '100%';
-        iframe.style.height = '600px'; // Ajusta la altura según sea necesario
-    }
-
-     // URL de tu API PHP que devuelve el número de visitas semanales
-  const urlApi = "https://latazaloca.com/notificar.php";
-
-  fetch(urlApi)
-    .then(response => {
-      if (!response.ok) throw new Error("Error en la respuesta");
-      return response.text(); // o response.json() si devuelves JSON
-    })
-    .then(visitas => {
-      const contador = document.getElementById("contador-vistas");
-      const contador2 = document.getElementById("contador-vistas2");
-      const visitasNum = parseInt(visitas);
-      if (!isNaN(visitasNum)) {
-        contador.textContent = `+${visitasNum} personas nos visitaron esta semana`;
-                contador2.textContent = `+${visitasNum} personas nos visitaron esta semana`;
-
-      } else {
-        contador.textContent = "No se pudo cargar el contador";
-                contador2.textContent = "No se pudo cargar el contador";
-
-      }
-    })
-    .catch(error => {
-      console.error("Error al cargar visitas:", error);
-      document.getElementById("contador-vistas").textContent = "Error cargando visitas";
-    });
-});
-
-const radioInputs = document.querySelectorAll('input[name="categoria"]');
-  const totalDisplay = document.getElementById('totalDisplay');
-
-  radioInputs.forEach(radio => {
-    radio.addEventListener('change', () => {
-      document.getElementById('seccion-cafe').style.display = 'none';
-      document.getElementById('seccion-sin-cafe').style.display = 'none';
-      document.getElementById('seccion-frappe').style.display = 'none';
-
-      if (radio.value === 'cafe') {
-        document.getElementById('seccion-cafe').style.display = 'block';
-      } else if (radio.value === 'sin-cafe') {
-        document.getElementById('seccion-sin-cafe').style.display = 'block';
-      } else if (radio.value === 'frappe') {
-        document.getElementById('seccion-frappe').style.display = 'block';
-      }
-      actualizarTotal();
-    });
-  });
-
-  document.querySelectorAll('.opcion').forEach(el => {
-    el.addEventListener('change', actualizarTotal);
-  });
-
-  function actualizarTotal() {
-    let total = 0;
-    document.querySelectorAll('.opcion:checked').forEach(el => {
-      total += parseFloat(el.dataset.precio);
-    });
-    totalDisplay.textContent = `💵 Total: $${total}`;
-  }
-
-  function enviarWhatsapp() {
-    let mensaje = "🧾 *Pedido:*\n";
-    let total = 0;
-    const categoria = document.querySelector('input[name="categoria"]:checked');
-    if (categoria) mensaje += `• Categoría seleccionada: ${categoria.value.toUpperCase()}\n`;
-
-    const bebidas = document.querySelectorAll('input[name="bebidas"]:checked');
-    if (bebidas.length > 0) {
-      mensaje += "• Bebidas:\n";
-      bebidas.forEach(b => {
-        mensaje += `   - ${b.value} ($${b.dataset.precio})\n`;
-        total += parseFloat(b.dataset.precio);
-      });
-    }
-
-    const extras = document.querySelectorAll('input[name="extras"]:checked');
-    if (extras.length > 0) {
-      mensaje += "• Extras:\n";
-      extras.forEach(e => {
-        mensaje += `   - ${e.value} ($${e.dataset.precio})\n`;
-        total += parseFloat(e.dataset.precio);
-      });
-    }
-
-    mensaje += `\n💵 *Total: $${total}*`;
-    mensaje += `\n\n✅ *Gracias por tu pedido en La Taza Loca*`;
-
-    document.getElementById('confirmacion').classList.remove('d-none');
-    const url = "https://wa.me/526641273236?text=" + encodeURIComponent(mensaje);
-    window.open(url, "_blank");
-
-    setTimeout(() => {
-      bootstrap.Modal.getInstance(document.getElementById('pedidoModal')).hide();
-      document.getElementById('formulario-pedido').reset();
-      document.getElementById('confirmacion').classList.add('d-none');
-      document.getElementById('seccion-cafe').style.display = 'none';
-      document.getElementById('seccion-sin-cafe').style.display = 'none';
-      document.getElementById('seccion-frappe').style.display = 'none';
-      totalDisplay.textContent = '💵 Total: $0';
-    }, 2500);
-  }
-</script>
-
-<script src="https://cdn.tailwindcss.com"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  
-<a href="https://www.facebook.com/share/16VwkYLE5K/" target="_blank" id="btn-facebook" aria-label="Facebook">
-<img src="https://cdn-icons-png.flaticon.com/512/5968/5968764.png" alt="Facebook" width="56"></a>
-  </body
+</body>
 </html>
+        
