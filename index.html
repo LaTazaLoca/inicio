@@ -537,10 +537,36 @@
         opacity: 1;
       }
     }
+
+      #btn-facebook {
+  position: fixed;
+  bottom: 160px;
+  width: 56px;
+  height: 56px;
+  right: 20px;
+  z-index: 1030; /* o incluso 1000 es suficiente */
+  border-radius: 50%;
+  transition: transform 0.2s ease-in-out;
+}
+#btn-facebook img {
+  border-radius: 50%;
+}
+#btn-facebook:hover {
+  transform: scale(1.1);
+}
+    .floating-btn {
+  position: fixed;
+  bottom: 100px; 
+  right: 20px;
+  z-index: 9999;
+}
   </style>
 </head>
 
 <body class="loading">
+<a href="https://www.facebook.com/share/16VwkYLE5K/" target="_blank" id="btn-facebook" aria-label="Facebook">
+<img src="https://cdn-icons-png.flaticon.com/512/5968/5968764.png" alt="Facebook" width="56"></a>
+  
   <!-- Header Principal -->
 <!-- HEADER -->
 <header class="main-header">
