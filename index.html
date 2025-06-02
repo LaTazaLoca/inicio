@@ -857,7 +857,8 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script>
 
-         // URL de tu API PHP que devuelve el número de visitas semanales
+document.addEventListener('DOMContentLoaded', function() {
+  // URL de tu API PHP que devuelve el número de visitas semanales
   const urlApi = "https://latazaloca.com/notificar.php";
 
   fetch(urlApi)
@@ -867,21 +868,22 @@
     })
     .then(visitas => {
       const contador = document.getElementById("contador-vistas");
-      const contador2 = document.getElementById("contador-vistas");
+      const contador2 = document.getElementById("contador-vistas2");
       const visitasNum = parseInt(visitas);
       if (!isNaN(visitasNum)) {
         contador.textContent = `+${visitasNum} personas nos visitaron esta semana`;
-                contador2.textContent = `+${visitasNum} personas nos visitaron esta semana`;
-
+        contador2.textContent = `+${visitasNum} personas nos visitaron esta semana`;
       } else {
         contador.textContent = "No se pudo cargar el contador";
-                contador2.textContent = "No se pudo cargar el contador";
-
+        contador2.textContent = "No se pudo cargar el contador";
       }
     })
     .catch(error => {
       console.error("Error al cargar visitas:", error);
-      document.getElementById("contador-vistas").textContent = "Error cargando visitas";
+      const contador = document.getElementById("contador-vistas");
+      if (contador) contador.textContent = "Error cargando visitas";
+      const contador2 = document.getElementById("contador-vistas2");
+      if (contador2) contador2.textContent = "Error cargando visitas";
     });
 });
   </script>
