@@ -837,7 +837,7 @@
           <div class="visit-counter">
             <p class="mb-0">
               <i class="fas fa-users me-2"></i>
-              <span id="contador-vistas">Cargando visitas...</span>
+              <span id="contador-vistas"></span>
             </p>
           </div>
         </div>
@@ -855,6 +855,36 @@
     </div>
   </footer>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+
+         // URL de tu API PHP que devuelve el número de visitas semanales
+  const urlApi = "https://latazaloca.com/notificar.php";
+
+  fetch(urlApi)
+    .then(response => {
+      if (!response.ok) throw new Error("Error en la respuesta");
+      return response.text(); // o response.json() si devuelves JSON
+    })
+    .then(visitas => {
+      const contador = document.getElementById("contador-vistas");
+      const contador2 = document.getElementById("contador-vistas");
+      const visitasNum = parseInt(visitas);
+      if (!isNaN(visitasNum)) {
+        contador.textContent = `+${visitasNum} personas nos visitaron esta semana`;
+                contador2.textContent = `+${visitasNum} personas nos visitaron esta semana`;
+
+      } else {
+        contador.textContent = "No se pudo cargar el contador";
+                contador2.textContent = "No se pudo cargar el contador";
+
+      }
+    })
+    .catch(error => {
+      console.error("Error al cargar visitas:", error);
+      document.getElementById("contador-vistas").textContent = "Error cargando visitas";
+    });
+});
+  </script>
 </body>
 </html>
         
