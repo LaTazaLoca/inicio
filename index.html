@@ -1308,168 +1308,193 @@
 
   //galeria
 
-  async function loadGallery() {
-    try {
-        // Mostrar indicador de carga
-        showLoading();
-        
-        // Hacer petición al PHP para obtener las imágenes
-        const response = await fetch('get_gallery_images.php');
-        const data = await response.json();
-        
-        if (data.error) {
-            showError(data.error);
-            return;
+   async function loadGallery() {
+        try {
+            // Mostrar indicador de carga
+            showLoading();
+            
+            // Hacer petición al PHP para obtener las imágenes
+            const response = await fetch('get_gallery_images.php');
+            const data = await response.json();
+            
+            if (data.error) {
+                showError(data.error);
+                return;
+            }
+            
+            if (data.length === 0) {
+                showEmptyGallery();
+                return;
+            }
+            
+            // Cargar el carrusel y la grid
+            loadCarousel(data);
+            loadGrid(data);
+            updateGalleryInfo(data);
+            
+        } catch (error) {
+            console.error('Error loading gallery:', error);
+            showError('Error al cargar la galería. Por favor, intenta más tarde.');
         }
-        
-        if (data.length === 0) {
-            showEmptyGallery();
-            return;
-        }
-        
-        // Cargar el carrusel y la grid
-        loadCarousel(data);
-        loadGrid(data);
-        updateGalleryInfo(data);
-        
-    } catch (error) {
-        console.error('Error loading gallery:', error);
-        showError('Error al cargar la galería. Por favor, intenta más tarde.');
     }
-}
 
-function showLoading() {
-    const carouselContent = document.getElementById('carouselContent');
-    const galleryGrid = document.getElementById('galleryGrid');
-    
-    carouselContent.innerHTML = `
-        <div class="carousel-item active">
-            <div class="loading-placeholder" style="height: 500px; display: flex; align-items: center; justify-content: center;">
-                <div class="text-center">
-                    <div class="spinner-border text-primary mb-3" role="status"></div>
-                    <p class="text-muted">Cargando galería...</p>
+    function showLoading() {
+        const carouselContent = document.getElementById('carouselContent');
+        const galleryGrid = document.getElementById('galleryGrid');
+        
+        carouselContent.innerHTML = `
+            <div class="carousel-item active">
+                <div class="loading-placeholder" style="height: 500px; display: flex; align-items: center; justify-content: center;">
+                    <div class="text-center">
+                        <div class="spinner-border text-primary mb-3" role="status"></div>
+                        <p class="text-muted">Cargando galería...</p>
+                    </div>
                 </div>
             </div>
-        </div>
-    `;
-    
-    galleryGrid.innerHTML = Array(6).fill(0).map(() => `
-        <div class="loading-placeholder" style="height: 250px;"></div>
-    `).join('');
-}
-
-function showError(message) {
-    const carouselContent = document.getElementById('carouselContent');
-    const galleryGrid = document.getElementById('galleryGrid');
-    
-    const errorHTML = `
-        <div class="error-message">
-            <i class="fas fa-exclamation-triangle fa-3x mb-3"></i>
-            <h5>Error al cargar la galería</h5>
-            <p>${message}</p>
-            <button class="btn btn-coffee mt-3" onclick="loadGallery()">
-                <i class="fas fa-refresh me-2"></i>Reintentar
-            </button>
-        </div>
-    `;
-    
-    carouselContent.innerHTML = `<div class="carousel-item active">${errorHTML}</div>`;
-    galleryGrid.innerHTML = '';
-}
-
-function showEmptyGallery() {
-    const carouselContent = document.getElementById('carouselContent');
-    const galleryGrid = document.getElementById('galleryGrid');
-    
-    const emptyHTML = `
-        <div class="empty-gallery">
-            <i class="fas fa-images fa-4x mb-3"></i>
-            <h5>Galería vacía</h5>
-            <p>Aún no hay imágenes en la galería.<br>
-            ¡Pronto tendremos contenido increíble para mostrar!</p>
-        </div>
-    `;
-    
-    carouselContent.innerHTML = `<div class="carousel-item active">${emptyHTML}</div>`;
-    galleryGrid.innerHTML = '';
-}
-
-function loadCarousel(images) {
-    const carouselContent = document.getElementById('carouselContent');
-    const carouselIndicators = document.getElementById('carouselIndicators');
-    
-    // Crear slides del carrusel (máximo 5 imágenes)
-    const carouselImages = images.slice(0, 5);
-    
-    const carouselHTML = carouselImages.map((image, index) => `
-        <div class="carousel-item ${index === 0 ? 'active' : ''}">
-            <img src="${image.url}" alt="${image.title}" class="d-block w-100" 
-                 onerror="this.src='https://via.placeholder.com/1200x500/5b3923/white?text=Imagen+no+disponible'">
-            <div class="carousel-caption-custom">
-                <h5>${image.title}</h5>
-                <p>${image.description}</p>
-            </div>
-        </div>
-    `).join('');
-    
-    // Crear indicadores
-    const indicatorsHTML = carouselImages.map((_, index) => `
-        <button type="button" data-bs-target="#galleryCarousel" data-bs-slide-to="${index}" 
-                ${index === 0 ? 'class="active"' : ''}></button>
-    `).join('');
-    
-    carouselContent.innerHTML = carouselHTML;
-    carouselIndicators.innerHTML = indicatorsHTML;
-}
-
-function loadGrid(images) {
-    const galleryGrid = document.getElementById('galleryGrid');
-    
-    const gridHTML = images.map(image => `
-        <div class="gallery-thumbnail" onclick="showImageModal('${image.url}', '${image.title}', '${image.description}')">
-            <img src="${image.url}" alt="${image.title}" 
-                 onerror="this.src='https://via.placeholder.com/300x250/5b3923/white?text=Imagen+no+disponible'">
-            <div class="gallery-overlay">
-                <i class="fas fa-search-plus"></i>
-                <h6>${image.title}</h6>
-                <p>${image.description}</p>
-            </div>
-            <div class="gallery-info">
-                <h6>${image.title}</h6>
-                <p>${image.description}</p>
-            </div>
-        </div>
-    `).join('');
-    
-    galleryGrid.innerHTML = gridHTML;
-}
-
-function updateGalleryInfo(images) {
-    document.getElementById('imageCount').textContent = images.length;
-    
-    if (images.length > 0) {
-        const lastModified = Math.max(...images.map(img => img.modified));
-        const lastUpdate = new Date(lastModified * 1000).toLocaleDateString('es-ES');
-        document.getElementById('lastUpdate').textContent = lastUpdate;
+        `;
+        
+        galleryGrid.innerHTML = Array(6).fill(0).map(() => `
+            <div class="loading-placeholder" style="height: 250px;"></div>
+        `).join('');
     }
-}
 
-function showImageModal(imageUrl, title, description) {
-    document.getElementById('modalImage').src = imageUrl;
-    document.getElementById('modalTitle').textContent = title;
-    document.getElementById('modalDescription').textContent = description;
-    
-    const modal = new bootstrap.Modal(document.getElementById('imageModal'));
-    modal.show();
-}
+    function showError(message) {
+        const carouselContent = document.getElementById('carouselContent');
+        const galleryGrid = document.getElementById('galleryGrid');
+        
+        const errorHTML = `
+            <div class="error-message">
+                <i class="fas fa-exclamation-triangle fa-3x mb-3"></i>
+                <h5>Error al cargar la galería</h5>
+                <p>${message}</p>
+                <button class="btn btn-coffee mt-3" onclick="loadGallery()">
+                    <i class="fas fa-refresh me-2"></i>Reintentar
+                </button>
+            </div>
+        `;
+        
+        carouselContent.innerHTML = `<div class="carousel-item active">${errorHTML}</div>`;
+        galleryGrid.innerHTML = '';
+    }
 
-// Función para recargar la galería (útil si se agregan nuevas imágenes)
-function refreshGallery() {
-    loadGallery();
-}
+    function showEmptyGallery() {
+        const carouselContent = document.getElementById('carouselContent');
+        const galleryGrid = document.getElementById('galleryGrid');
+        
+        const emptyHTML = `
+            <div class="empty-gallery">
+                <i class="fas fa-images fa-4x mb-3"></i>
+                <h5>Galería vacía</h5>
+                <p>Aún no hay imágenes en la galería.<br>
+                ¡Pronto tendremos contenido increíble para mostrar!</p>
+            </div>
+        `;
+        
+        carouselContent.innerHTML = `<div class="carousel-item active">${emptyHTML}</div>`;
+        galleryGrid.innerHTML = '';
+    }
 
-// Auto-refresh cada 5 minutos (opcional)
-setInterval(refreshGallery, 300000);
+    function loadCarousel(images) {
+        const carouselContent = document.getElementById('carouselContent');
+        const carouselIndicators = document.getElementById('carouselIndicators');
+        
+        // Crear slides del carrusel (máximo 5 imágenes)
+        const carouselImages = images.slice(0, 5);
+        
+        const carouselHTML = carouselImages.map((image, index) => `
+            <div class="carousel-item ${index === 0 ? 'active' : ''}">
+                <img src="${image.url}" alt="${image.title}" class="d-block w-100" 
+                     onerror="this.src='https://via.placeholder.com/1200x500/5b3923/white?text=Imagen+no+disponible'">
+                <div class="carousel-caption-custom">
+                    <h5>${image.title}</h5>
+                    <p>${image.description}</p>
+                </div>
+            </div>
+        `).join('');
+        
+        // Crear indicadores
+        const indicatorsHTML = carouselImages.map((_, index) => `
+            <button type="button" data-bs-target="#galleryCarousel" data-bs-slide-to="${index}" 
+                    ${index === 0 ? 'class="active"' : ''}></button>
+        `).join('');
+        
+        carouselContent.innerHTML = carouselHTML;
+        carouselIndicators.innerHTML = indicatorsHTML;
+    }
+
+    function loadGrid(images) {
+        const galleryGrid = document.getElementById('galleryGrid');
+        
+        const gridHTML = images.map(image => `
+            <div class="gallery-thumbnail" onclick="showImageModal('${image.url}', '${image.title}', '${image.description}')">
+                <img src="${image.url}" alt="${image.title}" 
+                     onerror="this.src='https://via.placeholder.com/300x250/5b3923/white?text=Imagen+no+disponible'">
+                <div class="gallery-overlay">
+                    <i class="fas fa-search-plus"></i>
+                    <h6>${image.title}</h6>
+                    <p>${image.description}</p>
+                </div>
+                <div class="gallery-info">
+                    <h6>${image.title}</h6>
+                    <p>${image.description}</p>
+                </div>
+            </div>
+        `).join('');
+        
+        galleryGrid.innerHTML = gridHTML;
+    }
+
+    function updateGalleryInfo(images) {
+        document.getElementById('imageCount').textContent = images.length;
+        
+        if (images.length > 0) {
+            const lastModified = Math.max(...images.map(img => img.modified));
+            const lastUpdate = new Date(lastModified * 1000).toLocaleDateString('es-ES');
+            document.getElementById('lastUpdate').textContent = lastUpdate;
+        }
+    }
+
+    function showImageModal(imageUrl, title, description) {
+        document.getElementById('modalImage').src = imageUrl;
+        document.getElementById('modalTitle').textContent = title;
+        document.getElementById('modalDescription').textContent = description;
+        
+        const modal = new bootstrap.Modal(document.getElementById('imageModal'));
+        modal.show();
+    }
+
+    // Función para recargar la galería (útil si se agregan nuevas imágenes)
+    function refreshGallery() {
+        loadGallery();
+    }
+
+    // Auto-refresh cada 5 minutos (opcional)
+    setInterval(refreshGallery, 300000);
+
+    // Cargar contador de visitas
+    function loadVisitCounter() {
+        const urlApi = "https://latazaloca.com/notificar.php";
+
+        fetch(urlApi)
+            .then(response => {
+                if (!response.ok) throw new Error("Error en la respuesta");
+                return response.text();
+            })
+            .then(visitas => {
+                const contador = document.getElementById("contador-vistas");
+                const visitasNum = parseInt(visitas);
+                if (!isNaN(visitasNum)) {
+                    contador.textContent = `+${visitasNum} personas nos visitaron esta semana`;
+                } else {
+                    contador.textContent = "No se pudo cargar el contador";
+                }
+            })
+            .catch(error => {
+                console.error("Error al cargar visitas:", error);
+                const contador = document.getElementById("contador-vistas");
+                if (contador) contador.textContent = "Error cargando visitas";
+            });
+    }
   //galeria
 </script>
 
