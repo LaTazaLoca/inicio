@@ -491,6 +491,136 @@
       font-weight: 600;
       margin: 2rem 0;
     }
+
+     /* NUEVA SECCIÓN DE GALERÍA */
+    .gallery-section {
+      background: linear-gradient(135deg, rgba(255,255,255,0.8) 0%, rgba(243, 229, 211, 0.3) 100%);
+    }
+
+    .gallery-container {
+      background: white;
+      border-radius: 25px;
+      padding: 2rem;
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+    }
+
+    .gallery-carousel {
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: var(--shadow-hover);
+    }
+
+    .carousel-item img {
+      width: 100%;
+      height: 500px;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .carousel-item:hover img {
+      transform: scale(1.05);
+    }
+
+    .carousel-caption-custom {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(transparent, rgba(0,0,0,0.7));
+      padding: 2rem 1rem 1rem;
+      color: white;
+    }
+
+    .carousel-caption-custom h5 {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .carousel-control-prev,
+    .carousel-control-next {
+      width: 5%;
+      background: linear-gradient(90deg, rgba(91, 57, 35, 0.1), transparent);
+    }
+
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+      background-color: var(--primary-brown);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      background-size: 20px;
+    }
+
+    .carousel-indicators {
+      bottom: 20px;
+    }
+
+    .carousel-indicators [data-bs-target] {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background-color: var(--gold);
+      border: 2px solid white;
+      margin: 0 5px;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .gallery-thumbnail {
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: var(--shadow-soft);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .gallery-thumbnail:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .gallery-thumbnail img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .gallery-thumbnail:hover img {
+      transform: scale(1.1);
+    }
+
+    .gallery-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(45deg, rgba(91, 57, 35, 0.8), rgba(212, 175, 55, 0.8));
+      opacity: 0;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .gallery-thumbnail:hover .gallery-overlay {
+      opacity: 1;
+    }
+
+    .gallery-overlay i {
+      color: white;
+      font-size: 2rem;
+    }
   </style>
 </head>
 <body>
@@ -621,6 +751,11 @@
         <li class="nav-item">
           <a class="nav-link" href="#menu"><i class="fas fa-mug-hot me-2"></i>Menú</a>
         </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#galeria">
+              <i class="fas fa-images me-2"></i>Galería
+            </a>
+          </li>
         <li class="nav-item">
           <a class="nav-link" href="#nosotros"><i class="fas fa-users me-2"></i>Nosotros</a>
         </li>
@@ -650,6 +785,75 @@
     </div>
   </div>
 </section>
+
+  <!-- NUEVA SECCIÓN DE GALERÍA DINÁMICA -->
+<section class="section gallery-section" id="galeria">
+  <div class="container">
+    <h2 class="section-title">Galería de Productos</h2>
+    <div class="gallery-container animate-on-scroll">
+      <p class="text-center lead mb-4">Descubre nuestros deliciosos productos y las últimas novedades</p>
+      
+      <!-- Carrusel Principal -->
+      <div id="galleryCarousel" class="carousel slide gallery-carousel" data-bs-ride="carousel" data-bs-interval="5000">
+        <div class="carousel-indicators" id="carouselIndicators">
+          <!-- Se generan automáticamente -->
+        </div>
+        
+        <div class="carousel-inner" id="carouselContent">
+          <!-- Las imágenes se cargarán dinámicamente aquí -->
+          <div class="text-center py-5">
+            <div class="spinner-border text-primary" role="status">
+              <span class="visually-hidden">Cargando galería...</span>
+            </div>
+            <p class="mt-3">Cargando galería...</p>
+          </div>
+        </div>
+        
+        <button class="carousel-control-prev" type="button" data-bs-target="#galleryCarousel" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon"></span>
+          <span class="visually-hidden">Anterior</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#galleryCarousel" data-bs-slide="next">
+          <span class="carousel-control-next-icon"></span>
+          <span class="visually-hidden">Siguiente</span>
+        </button>
+      </div>
+      
+      <!-- Grid de Miniaturas -->
+      <div class="gallery-grid" id="galleryGrid">
+        <!-- Las miniaturas se cargarán dinámicamente aquí -->
+      </div>
+      
+      <!-- Información de la galería -->
+      <div class="text-center mt-4">
+        <p class="text-muted">
+          <i class="fas fa-images me-2"></i>
+          <span id="imageCount">0</span> imágenes en la galería
+          <span class="ms-3">
+            <i class="fas fa-clock me-2"></i>
+            Última actualización: <span id="lastUpdate">--</span>
+          </span>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Modal para ver imagen completa -->
+<div class="modal fade" id="imageModal" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content" style="background: transparent; border: none;">
+      <div class="modal-body p-0">
+        <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-3" data-bs-dismiss="modal" style="z-index: 1000;"></button>
+        <img id="modalImage" src="" alt="" class="w-100" style="border-radius: 15px;">
+        <div class="position-absolute bottom-0 start-0 end-0 p-3" style="background: linear-gradient(transparent, rgba(0,0,0,0.8)); border-radius: 0 0 15px 15px;">
+          <h5 id="modalTitle" class="text-white mb-1"></h5>
+          <p id="modalDescription" class="text-white-50 mb-0"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- Sección Nosotros mejorada -->
 <section class="section-modern" id="nosotros">
@@ -963,7 +1167,8 @@
   document.addEventListener('DOMContentLoaded', function() {
     // Load visitor counter
     loadVisitorCounter();
-    
+        loadGallery();
+
     // Initialize order form
     initializeOrderForm();
   });
@@ -1100,6 +1305,172 @@
   window.addEventListener('load', function() {
     document.body.style.opacity = '1';
   });
+
+  //galeria
+
+  async function loadGallery() {
+    try {
+        // Mostrar indicador de carga
+        showLoading();
+        
+        // Hacer petición al PHP para obtener las imágenes
+        const response = await fetch('get_gallery_images.php');
+        const data = await response.json();
+        
+        if (data.error) {
+            showError(data.error);
+            return;
+        }
+        
+        if (data.length === 0) {
+            showEmptyGallery();
+            return;
+        }
+        
+        // Cargar el carrusel y la grid
+        loadCarousel(data);
+        loadGrid(data);
+        updateGalleryInfo(data);
+        
+    } catch (error) {
+        console.error('Error loading gallery:', error);
+        showError('Error al cargar la galería. Por favor, intenta más tarde.');
+    }
+}
+
+function showLoading() {
+    const carouselContent = document.getElementById('carouselContent');
+    const galleryGrid = document.getElementById('galleryGrid');
+    
+    carouselContent.innerHTML = `
+        <div class="carousel-item active">
+            <div class="loading-placeholder" style="height: 500px; display: flex; align-items: center; justify-content: center;">
+                <div class="text-center">
+                    <div class="spinner-border text-primary mb-3" role="status"></div>
+                    <p class="text-muted">Cargando galería...</p>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    galleryGrid.innerHTML = Array(6).fill(0).map(() => `
+        <div class="loading-placeholder" style="height: 250px;"></div>
+    `).join('');
+}
+
+function showError(message) {
+    const carouselContent = document.getElementById('carouselContent');
+    const galleryGrid = document.getElementById('galleryGrid');
+    
+    const errorHTML = `
+        <div class="error-message">
+            <i class="fas fa-exclamation-triangle fa-3x mb-3"></i>
+            <h5>Error al cargar la galería</h5>
+            <p>${message}</p>
+            <button class="btn btn-coffee mt-3" onclick="loadGallery()">
+                <i class="fas fa-refresh me-2"></i>Reintentar
+            </button>
+        </div>
+    `;
+    
+    carouselContent.innerHTML = `<div class="carousel-item active">${errorHTML}</div>`;
+    galleryGrid.innerHTML = '';
+}
+
+function showEmptyGallery() {
+    const carouselContent = document.getElementById('carouselContent');
+    const galleryGrid = document.getElementById('galleryGrid');
+    
+    const emptyHTML = `
+        <div class="empty-gallery">
+            <i class="fas fa-images fa-4x mb-3"></i>
+            <h5>Galería vacía</h5>
+            <p>Aún no hay imágenes en la galería.<br>
+            ¡Pronto tendremos contenido increíble para mostrar!</p>
+        </div>
+    `;
+    
+    carouselContent.innerHTML = `<div class="carousel-item active">${emptyHTML}</div>`;
+    galleryGrid.innerHTML = '';
+}
+
+function loadCarousel(images) {
+    const carouselContent = document.getElementById('carouselContent');
+    const carouselIndicators = document.getElementById('carouselIndicators');
+    
+    // Crear slides del carrusel (máximo 5 imágenes)
+    const carouselImages = images.slice(0, 5);
+    
+    const carouselHTML = carouselImages.map((image, index) => `
+        <div class="carousel-item ${index === 0 ? 'active' : ''}">
+            <img src="${image.url}" alt="${image.title}" class="d-block w-100" 
+                 onerror="this.src='https://via.placeholder.com/1200x500/5b3923/white?text=Imagen+no+disponible'">
+            <div class="carousel-caption-custom">
+                <h5>${image.title}</h5>
+                <p>${image.description}</p>
+            </div>
+        </div>
+    `).join('');
+    
+    // Crear indicadores
+    const indicatorsHTML = carouselImages.map((_, index) => `
+        <button type="button" data-bs-target="#galleryCarousel" data-bs-slide-to="${index}" 
+                ${index === 0 ? 'class="active"' : ''}></button>
+    `).join('');
+    
+    carouselContent.innerHTML = carouselHTML;
+    carouselIndicators.innerHTML = indicatorsHTML;
+}
+
+function loadGrid(images) {
+    const galleryGrid = document.getElementById('galleryGrid');
+    
+    const gridHTML = images.map(image => `
+        <div class="gallery-thumbnail" onclick="showImageModal('${image.url}', '${image.title}', '${image.description}')">
+            <img src="${image.url}" alt="${image.title}" 
+                 onerror="this.src='https://via.placeholder.com/300x250/5b3923/white?text=Imagen+no+disponible'">
+            <div class="gallery-overlay">
+                <i class="fas fa-search-plus"></i>
+                <h6>${image.title}</h6>
+                <p>${image.description}</p>
+            </div>
+            <div class="gallery-info">
+                <h6>${image.title}</h6>
+                <p>${image.description}</p>
+            </div>
+        </div>
+    `).join('');
+    
+    galleryGrid.innerHTML = gridHTML;
+}
+
+function updateGalleryInfo(images) {
+    document.getElementById('imageCount').textContent = images.length;
+    
+    if (images.length > 0) {
+        const lastModified = Math.max(...images.map(img => img.modified));
+        const lastUpdate = new Date(lastModified * 1000).toLocaleDateString('es-ES');
+        document.getElementById('lastUpdate').textContent = lastUpdate;
+    }
+}
+
+function showImageModal(imageUrl, title, description) {
+    document.getElementById('modalImage').src = imageUrl;
+    document.getElementById('modalTitle').textContent = title;
+    document.getElementById('modalDescription').textContent = description;
+    
+    const modal = new bootstrap.Modal(document.getElementById('imageModal'));
+    modal.show();
+}
+
+// Función para recargar la galería (útil si se agregan nuevas imágenes)
+function refreshGallery() {
+    loadGallery();
+}
+
+// Auto-refresh cada 5 minutos (opcional)
+setInterval(refreshGallery, 300000);
+  //galeria
 </script>
 
 <style>
