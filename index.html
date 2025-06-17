@@ -1168,69 +1168,307 @@
   
   <script>
     // ===================================
-    // JAVASCRIPT PARA CARGAR LA GALERÍA
+    // JAVASCRIPT PARA CARGAR LA GALERÍA AUTOMÁTICAMENTE
     // ===================================
 
     document.addEventListener('DOMContentLoaded', function() {
-        loadGallery();
+        loadGalleryFromFolder();
         
         // Cargar contador de visitas
         loadVisitCounter();
     });
 
-    async function loadGallery() {
+    async function loadGalleryFromFolder() {
         try {
-            // Mostrar indicador de carga
             showLoading();
             
-            // Hacer petición al PHP para obtener las imágenes
-            const response = await fetch('https://latazaloca.com/get_gallery_images.php');
+            // Intentar diferentes métodos para obtener la lista de archivos
+            const images = await getImagesFromDirectory();
             
-            // Verificar si la respuesta es exitosa
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
+            console.log('Found images:', images);
             
-            // Obtener el texto de la respuesta primero
-            const responseText = await response.text();
-            console.log('Response from PHP:', responseText);
-            
-            // Intentar parsear como JSON
-            let data;
-            try {
-                data = JSON.parse(responseText);
-            } catch (parseError) {
-                console.error('JSON Parse Error:', parseError);
-                console.error('Response text:', responseText);
-                throw new Error('Error al parsear la respuesta del servidor');
-            }
-            
-            // Verificar si hay error en los datos
-            if (data.error) {
-                showError(data.error);
-                return;
-            }
-            
-            // Verificar si data es un array
-            if (!Array.isArray(data)) {
-                console.error('Data is not an array:', data);
-                throw new Error('Formato de datos inválido');
-            }
-            
-            if (data.length === 0) {
+            if (images.length === 0) {
                 showEmptyGallery();
                 return;
             }
             
             // Cargar el carrusel y la grid
-            loadCarousel(data);
-            loadGrid(data);
-            updateGalleryInfo(data);
+            loadCarousel(images);
+            loadGrid(images);
+            updateGalleryInfo(images);
             
         } catch (error) {
             console.error('Error loading gallery:', error);
             showError(`Error al cargar la galería: ${error.message}`);
         }
+    }
+
+    async function getImagesFromDirectory() {
+        const foundImages = [];
+        const galleryPath = 'galeria/';
+        
+        // Método 1: Intentar usar File System Access API (navegadores modernos)
+        if ('showDirectoryPicker' in window) {
+            try {
+                console.log('Trying File System Access API...');
+                // Esta API requiere interacción del usuario, no funciona automáticamente
+            } catch (e) {
+                console.log('File System Access API not available');
+            }
+        }
+        
+        // Método 2: Intentar fetch del directorio
+        try {
+            console.log('Trying directory listing...');
+            const response = await fetch(galleryPath);
+            const html = await response.text();
+            
+            // Buscar enlaces a imágenes en el HTML del directorio
+            const imageUrls = extractImageUrlsFromHTML(html, galleryPath);
+            
+            for (const url of imageUrls) {
+                const exists = await checkImageExists(url);
+                if (exists) {
+                    const filename = url.split('/').pop();
+                    const imageInfo = createImageInfo(filename, url);
+                    foundImages.push(imageInfo);
+                }
+            }
+            
+            if (foundImages.length > 0) {
+                return foundImages;
+            }
+        } catch (e) {
+            console.log('Directory listing failed:', e);
+        }
+        
+        // Método 3: Usar patrones comunes como fallback
+        console.log('Using pattern-based detection...');
+        return await scanCommonPatterns(galleryPath);
+    }
+
+    function extractImageUrlsFromHTML(html, basePath) {
+        const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.bmp', '.svg'];
+        const urls = [];
+        
+        // Buscar enlaces en el HTML del directorio
+        const linkRegex = /<a[^>]+href=["']([^"']+)["'][^>]*>/gi;
+        let match;
+        
+        while ((match = linkRegex.exec(html)) !== null) {
+            const href = match[1];
+            
+            // Verificar si es una imagen
+            const isImage = imageExtensions.some(ext => 
+                href.toLowerCase().endsWith(ext)
+            );
+            
+            if (isImage && !href.includes('/')) {
+                urls.push(basePath + href);
+            }
+        }
+        
+        return urls;
+    }
+
+    async function scanCommonPatterns(basePath) {
+        const foundImages = [];
+        const patterns = generateImagePatterns();
+        
+        console.log(`Scanning ${patterns.length} possible image names...`);
+        
+        // Procesar en lotes para no sobrecargar el servidor
+        const batchSize = 10;
+        for (let i = 0; i < patterns.length; i += batchSize) {
+            const batch = patterns.slice(i, i + batchSize);
+            const batchPromises = batch.map(async (filename) => {
+                const url = basePath + filename;
+                const exists = await checkImageExists(url);
+                if (exists) {
+                    return createImageInfo(filename, url);
+                }
+                return null;
+            });
+            
+            const batchResults = await Promise.all(batchPromises);
+            const validImages = batchResults.filter(img => img !== null);
+            foundImages.push(...validImages);
+            
+            // Pequeña pausa entre lotes
+            await new Promise(resolve => setTimeout(resolve, 100));
+        }
+        
+        return foundImages;
+    }
+
+    function generateImagePatterns() {
+        const patterns = [];
+        const extensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+        
+        // Números del 1 al 50
+        for (let i = 1; i <= 50; i++) {
+            extensions.forEach(ext => {
+                patterns.push(`${i}.${ext}`);
+                patterns.push(`0${i}.${ext}`); // Con cero inicial
+                patterns.push(`00${i}.${ext}`); // Con doble cero
+            });
+        }
+        
+        // Patrones IMG_
+        for (let i = 1; i <= 20; i++) {
+            const num = i.toString().padStart(3, '0');
+            extensions.forEach(ext => {
+                patterns.push(`IMG_${num}.${ext}`);
+                patterns.push(`img_${num}.${ext}`);
+            });
+        }
+        
+        // Patrones DSC_
+        for (let i = 1; i <= 20; i++) {
+            const num = i.toString().padStart(4, '0');
+            extensions.forEach(ext => {
+                patterns.push(`DSC_${num}.${ext}`);
+                patterns.push(`dsc_${num}.${ext}`);
+            });
+        }
+        
+        // Nombres descriptivos comunes
+        const descriptiveNames = [
+            'cafe', 'coffee', 'latte', 'americano', 'espresso', 'cappuccino',
+            'frappe', 'chocolate', 'chai', 'tea', 'moka', 'macchiato',
+            'producto', 'product', 'nuevo', 'new', 'especial', 'special',
+            'promocion', 'promo', 'novedad', 'menu', 'bebida', 'drink',
+            'caliente', 'hot', 'frio', 'cold', 'helado', 'ice'
+        ];
+        
+        descriptiveNames.forEach(name => {
+            extensions.forEach(ext => {
+                patterns.push(`${name}.${ext}`);
+                patterns.push(`${name}_1.${ext}`);
+                patterns.push(`${name}_2.${ext}`);
+                patterns.push(`${name}-1.${ext}`);
+                patterns.push(`${name}-2.${ext}`);
+                // Variaciones con mayúsculas
+                patterns.push(`${name.charAt(0).toUpperCase() + name.slice(1)}.${ext}`);
+            });
+        });
+        
+        // Patrones photo/imagen
+        for (let i = 1; i <= 20; i++) {
+            extensions.forEach(ext => {
+                patterns.push(`photo${i}.${ext}`);
+                patterns.push(`imagen${i}.${ext}`);
+                patterns.push(`foto${i}.${ext}`);
+            });
+        }
+        
+        // Fechas actuales
+        const currentYear = new Date().getFullYear();
+        for (let month = 1; month <= 12; month++) {
+            const monthStr = month.toString().padStart(2, '0');
+            extensions.forEach(ext => {
+                patterns.push(`${currentYear}-${monthStr}.${ext}`);
+                patterns.push(`${currentYear}_${monthStr}.${ext}`);
+            });
+        }
+        
+        return patterns;
+    }
+
+    // Función para verificar si una imagen existe (más rápida)
+    function checkImageExists(url) {
+        return new Promise((resolve) => {
+            const img = new Image();
+            img.onload = () => resolve(true);
+            img.onerror = () => resolve(false);
+            img.src = url;
+            
+            // Timeout más corto para acelerar el proceso
+            setTimeout(() => resolve(false), 1500);
+        });
+    }
+
+    // Función para crear información de imagen desde el nombre
+    function createImageInfo(filename, url) {
+        const nameWithoutExt = filename.split('.')[0];
+        const title = formatTitle(nameWithoutExt);
+        
+        return {
+            filename: filename,
+            url: url,
+            title: title,
+            description: generateDescription(title),
+            modified: Date.now(),
+            extension: filename.split('.').pop().toLowerCase()
+        };
+    }
+
+    function formatTitle(name) {
+        // Remover prefijos comunes
+        let title = name.replace(/^(IMG_|DSC_|photo|imagen|foto)/i, '');
+        
+        // Reemplazar separadores con espacios
+        title = title.replace(/[-_]/g, ' ');
+        
+        // Capitalizar cada palabra
+        title = title.replace(/\b\w/g, l => l.toUpperCase());
+        
+        // Si solo es un número, agregar contexto
+        if (/^\d+$/.test(title.trim())) {
+            title = `Producto #${title.trim()}`;
+        }
+        
+        return title || 'Imagen de La Taza Loca';
+    }
+
+    // Función para generar descripciones automáticas
+    function generateDescription(title) {
+        const descriptions = {
+            'cafe': 'Delicioso café recién preparado',
+            'coffee': 'Delicioso café recién preparado',
+            'latte': 'Cremoso latte con arte perfecto',
+            'americano': 'Café americano de especialidad',
+            'frappe': 'Refrescante frappé para cualquier momento',
+            'chocolate': 'Chocolate caliente cremoso y reconfortante',
+            'chai': 'Aromático té chai con especias',
+            'espresso': 'Intenso espresso de granos selectos',
+            'cappuccino': 'Cremoso cappuccino italiano',
+            'moka': 'Perfecta combinación de café y chocolate',
+            'macchiato': 'Delicioso macchiato con leche espumosa',
+            'producto': 'Uno de nuestros productos especiales',
+            'product': 'Uno de nuestros productos especiales',
+            'novedad': 'Nueva incorporación a nuestro menú',
+            'new': 'Nueva incorporación a nuestro menú',
+            'especial': 'Producto especial de temporada',
+            'special': 'Producto especial de temporada',
+            'nuevo': 'Lo más nuevo de La Taza Loca',
+            'promocion': 'Promoción especial por tiempo limitado',
+            'promo': 'Promoción especial por tiempo limitado',
+            'menu': 'Deliciosa opción de nuestro menú',
+            'bebida': 'Refrescante bebida para disfrutar',
+            'drink': 'Refrescante bebida para disfrutar',
+            'fria': 'Perfecta para refrescarte',
+            'cold': 'Perfecta para refrescarte',
+            'caliente': 'Ideal para entrar en calor',
+            'hot': 'Ideal para entrar en calor',
+            'helado': 'Refrescante bebida helada',
+            'ice': 'Refrescante bebida helada'
+        };
+        
+        const titleLower = title.toLowerCase();
+        
+        for (const [keyword, desc] of Object.entries(descriptions)) {
+            if (titleLower.includes(keyword)) {
+                return desc;
+            }
+        }
+        
+        // Para números/productos numerados
+        if (titleLower.includes('producto #')) {
+            return 'Uno de nuestros deliciosos productos';
+        }
+        
+        return 'Producto delicioso de La Taza Loca';
     }
 
     function showLoading() {
@@ -1395,14 +1633,14 @@
         icon.classList.add('fa-spin');
         button.disabled = true;
         
-        loadGallery().finally(() => {
+        loadGalleryFromFolder().finally(() => {
             icon.classList.remove('fa-spin');
             button.disabled = false;
         });
     }
 
-    // Auto-refresh cada 5 minutos (opcional)
-    setInterval(refreshGallery, 300000);
+    // Auto-refresh cada 10 minutos (opcional)
+    setInterval(refreshGallery, 600000);
 
     // Cargar contador de visitas
     function loadVisitCounter() {
